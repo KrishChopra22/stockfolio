@@ -1,16 +1,8 @@
 # stockfolio
-
-A new Flutter project.
+A stock-market portfolio management app, mainly focused on automated tracking and in-depth analysis.
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone this repo
+2. Run command `flutterfire configure --project=stockfolio-c6827` to generate required firebase files
+3. Run command `flutter pub get`
+4. Now, you are ready to build and run
