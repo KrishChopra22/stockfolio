@@ -9,14 +9,24 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
+  cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
+  firebase_auth: ^4.17.9
+  firebase_core: ^2.27.1
+  firebase_storage: ^11.6.10
+  cloud_firestore: ^4.15.9
+  pinput: ^4.0.0
+  country_picker: ^2.0.25
+  flutter_bloc: ^8.1.4
+  image_picker: ^1.0.7
+  lottie: ^3.1.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
