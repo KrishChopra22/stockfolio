@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
 import 'package:stockfolio/features/auth/screens/login_screen.dart';
+import 'package:stockfolio/features/home/screens/game_screen.dart';
 import 'package:stockfolio/models/user_model.dart';
 import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
@@ -33,6 +34,16 @@ class _DashboardState extends State<Dashboard> {
             Text(widget.userModel.phoneNumber!),
             Text(widget.userModel.bio!),
             Image.network(widget.userModel.profilePic!),
+            const SizedBox(height: 20),
+            CustomButton(
+              text: 'Play Game',
+              onPressed: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => const GameScreen()),
+                );
+              },
+            ),
           ],
         ),
       ),
