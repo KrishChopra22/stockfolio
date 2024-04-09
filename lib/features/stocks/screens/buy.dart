@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:stockfolio/widgets/custom_button.dart';
+import 'package:stockfolio/widgets/custom_textfield.dart';
 
-import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_textfield.dart';
-
-class SellNext extends StatefulWidget {
-  const SellNext({Key? key}) : super(key: key);
+class Buy extends StatefulWidget {
+  const Buy({super.key});
 
   @override
-  State<SellNext> createState() => _SellNextState();
+  State<Buy> createState() => _BuyState();
 }
 
-class _SellNextState extends State<SellNext> {
-  final buyTextController = TextEditingController();
-  final quantityTextController = TextEditingController();
-  final priceTextController = TextEditingController();
-  final dateTextController = TextEditingController();
-
+class _BuyState extends State<Buy> {
+  final TextEditingController buyTextController = TextEditingController();
+  final TextEditingController quantityTextController = TextEditingController();
+  final TextEditingController priceTextController = TextEditingController();
+  final TextEditingController dateTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,26 +22,31 @@ class _SellNextState extends State<SellNext> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(child: Text("New Trade")),
-              Text("Owned"),
-              Card(),
+            children: <Widget>[
+              const Center(child: Text('New Trade')),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: CustomTextField(
+                  hintText: 'Stock Symbol',
+                  icon: Icons.add,
+                  inputType: TextInputType.text,
+                  maxLines: 1,
+                  controller: buyTextController,
+                  labelText: 'Stock Name',
+                ),
+              ),
               Container(
                 constraints:
-                BoxConstraints(maxWidth: MediaQuery
-                    .of(context)
-                    .size
-                    .width),
+                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                 child: Row(
                   // crossAxisAlignment: CrossAxisAlignment.stretch,
                   // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                  children: <Widget>[
                     Expanded(
-                      flex: 1,
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15),
                         child: CustomTextField(
-                          hintText: "Quantity",
+                          hintText: 'Quantity',
                           icon: Icons.add,
                           inputType: TextInputType.text,
                           maxLines: 1,
@@ -53,16 +56,15 @@ class _SellNextState extends State<SellNext> {
                       ),
                     ),
                     Expanded(
-                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: CustomTextField(
-                          hintText: "Price",
+                          hintText: 'Price',
                           icon: Icons.add,
                           inputType: TextInputType.text,
                           maxLines: 1,
                           controller: priceTextController,
-                          labelText: "Stock Name",
+                          labelText: 'Stock Name',
                         ),
                       ),
                     ),
@@ -70,28 +72,24 @@ class _SellNextState extends State<SellNext> {
                 ),
               ),
               Container(
-                constraints:
-                BoxConstraints(maxWidth: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 3),
-
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width / 3),
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(15),
                   child: CustomTextField(
-                    hintText: "",
+                    hintText: '',
                     icon: Icons.date_range,
                     inputType: TextInputType.datetime,
                     maxLines: 1,
                     controller: dateTextController,
-                    labelText: "Date",
+                    labelText: 'Date',
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: CustomButton(text: "Add Trade", onPressed: () {}),
-              )
+                padding: const EdgeInsets.all(15),
+                child: CustomButton(text: 'Add Trade', onPressed: () {}),
+              ),
             ],
           ),
         ),
