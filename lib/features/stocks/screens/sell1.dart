@@ -3,26 +3,26 @@ import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_textfield.dart';
 
 class Sell extends StatefulWidget {
-  const Sell({Key? key}) : super(key: key);
+  const Sell({super.key});
 
   @override
   State<Sell> createState() => _SellState();
 }
 
 class _SellState extends State<Sell> {
-  final searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text("New Trade"),
+          children: <Widget>[
+            const Text('New Trade'),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15),
               child: CustomTextField(
-                hintText: "Stock Symbol",
+                hintText: 'Stock Symbol',
                 icon: Icons.search,
                 inputType: TextInputType.text,
                 maxLines: 1,
@@ -30,16 +30,15 @@ class _SellState extends State<Sell> {
                 labelText: 'Search',
               ),
             ),
-            Text("Current Holding"),
+            const Text('Current Holding'),
             Column(
-              children: [
-                Card(
+              children: <Widget>[
+                const Card(
                   color: Colors.blueGrey,
-                  
                 ),
-                CustomButton(text: "Add Trade", onPressed: (){})
+                CustomButton(text: 'Add Trade', onPressed: () {}),
               ],
-            )
+            ),
           ],
         ),
       ),

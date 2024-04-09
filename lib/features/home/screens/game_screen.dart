@@ -11,10 +11,9 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  Timer? _timer;
   int totatltime = 500;
   double price = 100;
-  late bool startstop;
+  bool startstop = false;
   double num = 0;
   double add = 100;
   late int news;
@@ -116,7 +115,7 @@ class _GameScreenState extends State<GameScreen> {
 
   void changeprice() {
     if (startstop) {
-      _timer = Timer(Duration(milliseconds: totatltime), () {
+      Timer(Duration(milliseconds: totatltime), () {
         totatltime = 1800;
         if (startstop) {
           setState(() {
