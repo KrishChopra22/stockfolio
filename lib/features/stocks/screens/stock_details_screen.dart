@@ -1,3 +1,4 @@
+import 'package:fk_toggle/fk_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stockfolio/features/home/repo/home_repo.dart';
@@ -36,225 +37,112 @@ class _StockDetailsScreenState extends State<StockDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final OnSelected selected = ((index, instance) {
+      // ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //     content: Text('Select $index, toggle ${instance.labels[index]}')));
+      //if index ==1 redirect ...
+      print('Select $index, toggle ${instance.labels[index]}');
+    });
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 360,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(16),
+        body:
+        SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.black,
+                  height: MediaQuery.of(context).size.height / 3,
+                  width: MediaQuery.of(context).size.width,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Center(
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(80),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Image.network(widget.stockData.imageUrl!),
-                            ),
-                          ),
+          
+                Text('${widget.stockData.symbol}'),
+                Text('${widget.stockData.name}'),
+                Text('${widget.stockData.exchange}'),
+                Text('${widget.stockData.price}'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('${widget.stockData.change}          '),
+                    Text('${widget.stockData.changesPercentage}'),
+                  ],
+                ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))
+                    ),
+                    color: Color(0xffD9D9D9),
+                    clipBehavior: Clip.hardEdge,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 4,
+                      width: MediaQuery.of(context).size.width - 30,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.02,
+                          left: MediaQuery.of(context).size.width * 0.07,
+                          bottom: MediaQuery.of(context).size.height * 0.02,
+                          right: MediaQuery.of(context).size.width * 0.07,
+                        ),
+                        child:
+                        Column(
+                          children: [
+                            Text('Open: ${widget.stockData.open}'),
+                            Text('Prev Close: ${widget.stockData.previousClose}'),
+                            Text('Volume: ${widget.stockData.volume}'),
+                            Text('P/E: ${widget.stockData.pe}'),
+          
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text('dayLow'),
+                                    Text('${widget.stockData.dayLow}'),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text('dayHigh'),
+                                    Text('${widget.stockData.dayHigh}'),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 240,
-                            child: Text(
-                              '${widget.stockData.name!} (${widget.stockData.symbol!})',
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.deepPurple[50],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4),
-                              child: Text(
-                                widget.stockData.exchange!,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.blue.shade700,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          const Text(
-                            'Current Price : ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            '\$${widget.stockData.price!}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: widget.stockData.changesPercentage! > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            widget.stockData.changesPercentage! > 0
-                                ? r'$+ '
-                                : r'$ ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: widget.stockData.changesPercentage! > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            '${widget.stockData.change!}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: widget.stockData.changesPercentage! > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            widget.stockData.changesPercentage! > 0
-                                ? '(+ '
-                                : '( ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: widget.stockData.changesPercentage! > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            '${widget.stockData.changesPercentage!.toStringAsFixed(2)}%)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: widget.stockData.changesPercentage! > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Volume : ${widget.stockData.volume!}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Open : \$${widget.stockData.open!}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Previous Close : \$${widget.stockData.previousClose}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "Today's Highest : \$${widget.stockData.dayHigh}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                    ),
+                  ),
+          
+          
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: FkToggle(
+                      height: MediaQuery.of(context).size.height / 20,
+                      width: 180,
+                      labels: const ['Current Holdings', 'Past Holdings'],
+                      onSelected: selected
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               Container(
-                height: 400,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade800,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: fetched
-                    ? StockChartWidget(
-                        stockChartList: stockChartModelList,
-                      )
-                    : const Text('Fetching Graph...'),
-              ),
-            ],
+                          height: 400,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: fetched
+                              ? StockChartWidget(
+                                  stockChartList: stockChartModelList,
+                                )
+                              : const Text('Fetching Graph...'),
+                        ),
+              ],
+            ),
           ),
-        ),
-      ),
+        )
+
     );
   }
 }
