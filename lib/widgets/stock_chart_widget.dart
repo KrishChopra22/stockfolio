@@ -69,7 +69,7 @@ class _StockChartWidgetState extends State<StockChartWidget> {
         topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
       ),
       borderData: FlBorderData(
-        border: Border.all(color: Colors.white12),
+        border: Border.all(color: Colors.black),
       ),
       minX: _minX,
       maxX: _maxX,
@@ -108,7 +108,7 @@ class _StockChartWidgetState extends State<StockChartWidget> {
         return Text(
           '\$${value.round()}',
           style: const TextStyle(
-            color: Colors.white54,
+            color: Colors.black,
             fontSize: 14,
           ),
         );
@@ -128,7 +128,7 @@ class _StockChartWidgetState extends State<StockChartWidget> {
         return Text(
           DateFormat.MMM().format(date),
           style: const TextStyle(
-            color: Colors.white54,
+            color: Colors.black,
             fontSize: 14,
           ),
         );
