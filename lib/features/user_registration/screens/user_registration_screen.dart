@@ -3,23 +3,23 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stockfolio/features/home/screens/dashboard.dart';
-import 'package:stockfolio/features/user_registeration/bloc/user_cubit.dart';
+import 'package:stockfolio/features/user_registration/bloc/user_cubit.dart';
 import 'package:stockfolio/models/user_model.dart';
 import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_textfield.dart';
 
-class UserRegisterationScreen extends StatefulWidget {
-  const UserRegisterationScreen({required this.phoneNumber, super.key});
+class UserRegistrationScreen extends StatefulWidget {
+  const UserRegistrationScreen({required this.phoneNumber, super.key});
 
   final String phoneNumber;
 
   @override
-  State<UserRegisterationScreen> createState() =>
-      _UserRegisterationScreenState();
+  State<UserRegistrationScreen> createState() =>
+      _UserRegistrationScreenState();
 }
 
-class _UserRegisterationScreenState extends State<UserRegisterationScreen> {
+class _UserRegistrationScreenState extends State<UserRegistrationScreen> {
   File? image;
   final nameController = TextEditingController();
   final emailController = TextEditingController();

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
 import 'package:stockfolio/features/home/screens/dashboard.dart';
-import 'package:stockfolio/features/user_registeration/screens/user_registeration_screen.dart';
+import 'package:stockfolio/features/user_registration/screens/user_registration_screen.dart';
 import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 
@@ -112,7 +112,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    UserRegisterationScreen(
+                                    UserRegistrationScreen(
                                   phoneNumber: state.phoneNumber,
                                 ),
                               ),

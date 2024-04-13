@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stockfolio/features/auth/repo/auth_repo.dart';
-import 'package:stockfolio/features/user_registeration/repo/user_repo.dart';
+import 'package:stockfolio/features/user_registration/repo/user_repo.dart';
 import 'package:stockfolio/models/user_model.dart';
 
 part 'auth_state.dart';
