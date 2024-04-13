@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
@@ -11,30 +12,31 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  int totatltime = 500;
+  int totalTime = 500;
   double price = 100;
-  bool startstop = false;
+  bool startStop = false;
   double num = 0;
   double add = 100;
   late int news;
-  double updownprice = 0;
-  double startprice = 100;
-  Color icon_text = Colors.white;
-  String start_or_stop = 'START';
-  double userwealth = 100000;
-  IconData myicon = Icons.arrow_upward;
-  Color iconcolor = const Color.fromARGB(255, 0, 233, 0);
-  int number_of_shares = 0;
-  int totalnumofshare = 0;
-  int sharesbought = 0;
+  double upDownPrice = 0;
+  double startPrice = 100;
+  Color iconText = Colors.white;
+  String startOrStop = 'START';
+  double userWealth = 100000;
+  IconData myIcon = Icons.arrow_upward;
+  Color iconColor = const Color.fromARGB(255, 0, 233, 0);
+  int numberOfShares = 0;
+  int totalNumOfShare = 0;
+  int sharesBought = 0;
   late SnackBar snackBar;
   double high = 100;
   double low = 100;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   void _showSnackBar() {
     snackBar = SnackBar(
       content: Text(
-        'Success, Bought $totalnumofshare shares at the rate of ${price.toStringAsFixed(2)}, Shares owned: $sharesbought',
+        '''Success, Bought $totalNumOfShare shares at the rate of ${price.toStringAsFixed(2)}, Shares owned: $sharesBought''',
         style: const TextStyle(
           color: Colors.white,
           fontFamily: 'OpenSans',
@@ -50,7 +52,7 @@ class _GameScreenState extends State<GameScreen> {
     snackBar = SnackBar(
       duration: const Duration(milliseconds: 1200),
       content: Text(
-        'Success, Sold $totalnumofshare shares at the rate of ${price.toStringAsFixed(2)}, shares owned: $sharesbought',
+        '''Success, Sold $totalNumOfShare shares at the rate of ${price.toStringAsFixed(2)}, shares owned: $sharesBought''',
         style: const TextStyle(
           color: Colors.white,
           fontFamily: 'OpenSans',
@@ -65,7 +67,7 @@ class _GameScreenState extends State<GameScreen> {
   void numberofshares(int num) {
     setState(() {
       if (num == 0) {
-        number_of_shares = userwealth ~/ startprice;
+        numberOfShares = userWealth ~/ startPrice;
       } else if (num == 1) {}
     });
   }
@@ -73,15 +75,15 @@ class _GameScreenState extends State<GameScreen> {
   void changecolor(double diff) {
     if (diff >= 0) {
       setState(() {
-        icon_text = const Color.fromARGB(255, 0, 233, 0);
-        myicon = Icons.arrow_upward;
-        iconcolor = const Color.fromARGB(255, 0, 233, 0);
+        iconText = const Color.fromARGB(255, 0, 233, 0);
+        myIcon = Icons.arrow_upward;
+        iconColor = const Color.fromARGB(255, 0, 233, 0);
       });
     } else {
       setState(() {
-        myicon = Icons.arrow_downward;
-        icon_text = const Color(0xffFF0000);
-        iconcolor = const Color(0xffFF0000);
+        myIcon = Icons.arrow_downward;
+        iconText = const Color(0xffFF0000);
+        iconColor = const Color(0xffFF0000);
       });
     }
   }
@@ -106,80 +108,80 @@ class _GameScreenState extends State<GameScreen> {
   void setstatesws(String onorof) {
     setState(() {
       if (onorof == 'START') {
-        start_or_stop = 'STOP';
+        startOrStop = 'STOP';
       } else {
-        start_or_stop = 'START';
+        startOrStop = 'START';
       }
     });
   }
 
   void changeprice() {
-    if (startstop) {
-      Timer(Duration(milliseconds: totatltime), () {
-        totatltime = 1800;
-        if (startstop) {
+    if (startStop) {
+      Timer(Duration(milliseconds: totalTime), () {
+        totalTime = 1800;
+        if (startStop) {
           setState(() {
             final int news = Random().nextInt(10);
             switch (news) {
               case 0:
                 add = add + getrandom();
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
 
               case 1:
                 add = add + getrandom();
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 2:
                 add = add + 0.30;
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 3:
                 add = add - .40;
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 4:
                 add = add + getrandom();
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 5:
                 add = add - .40;
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 6:
                 add = add + getrandom();
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 7:
                 add = add + getrandom();
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 8:
                 add = add + getrandom();
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
               case 9:
                 add = add + 0.30;
 
-                updownprice = add - startprice;
-                changecolor(updownprice);
+                upDownPrice = add - startPrice;
+                changecolor(upDownPrice);
                 price = add;
             }
             if (high < price) {
@@ -225,13 +227,13 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (start_or_stop == 'START') {
+                      if (startOrStop == 'START') {
                         setstatesws('START');
                         numberofshares(0);
-                        startstop = true;
+                        startStop = true;
                         changeprice();
-                      } else if (start_or_stop == 'STOP') {
-                        startstop = false;
+                      } else if (startOrStop == 'STOP') {
+                        startStop = false;
                         setstatesws('STOP');
                       }
                     },
@@ -245,7 +247,7 @@ class _GameScreenState extends State<GameScreen> {
                       ),
                     ),
                     child: Text(
-                      start_or_stop,
+                      startOrStop,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -310,8 +312,8 @@ class _GameScreenState extends State<GameScreen> {
                           ),
                           IconButton(
                             icon: Icon(
-                              myicon,
-                              color: iconcolor,
+                              myIcon,
+                              color: iconColor,
                             ),
                             iconSize: 40,
                             onPressed: null,
@@ -320,9 +322,9 @@ class _GameScreenState extends State<GameScreen> {
                             baseline: 30,
                             baselineType: TextBaseline.alphabetic,
                             child: Text(
-                              updownprice.toStringAsFixed(2),
+                              upDownPrice.toStringAsFixed(2),
                               style: TextStyle(
-                                color: icon_text,
+                                color: iconText,
                                 fontFamily: 'Roboto',
                                 fontSize: 25,
                               ),
@@ -413,7 +415,7 @@ class _GameScreenState extends State<GameScreen> {
                 const Padding(padding: EdgeInsets.only(top: 10)),
                 Flexible(
                   child: Text(
-                    'Shares Owned : $sharesbought',
+                    'Shares Owned : $sharesBought',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,
@@ -433,7 +435,7 @@ class _GameScreenState extends State<GameScreen> {
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            totalnumofshare = number_of_shares ~/ 3.4;
+                            totalNumOfShare = numberOfShares ~/ 3.4;
                           });
                         },
                         shape: Border.all(
@@ -442,7 +444,7 @@ class _GameScreenState extends State<GameScreen> {
                         ),
                         minWidth: MediaQuery.of(context).size.width / 9,
                         child: Text(
-                          (number_of_shares / 3.4).toStringAsFixed(0),
+                          (numberOfShares / 3.4).toStringAsFixed(0),
                           style: const TextStyle(
                             color: Color.fromARGB(255, 166, 170, 207),
                             fontFamily: 'OpenSans',
@@ -453,7 +455,7 @@ class _GameScreenState extends State<GameScreen> {
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            totalnumofshare = number_of_shares ~/ 2.5;
+                            totalNumOfShare = numberOfShares ~/ 2.5;
                           });
                         },
                         minWidth: MediaQuery.of(context).size.width / 9.1,
@@ -462,7 +464,7 @@ class _GameScreenState extends State<GameScreen> {
                           color: const Color.fromARGB(255, 166, 170, 207),
                         ),
                         child: Text(
-                          (number_of_shares / 2.5).toStringAsFixed(0),
+                          (numberOfShares / 2.5).toStringAsFixed(0),
                           style: const TextStyle(
                             color: Color.fromARGB(255, 166, 170, 207),
                             fontFamily: 'OpenSans',
@@ -473,7 +475,7 @@ class _GameScreenState extends State<GameScreen> {
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            totalnumofshare = number_of_shares ~/ 1.4;
+                            totalNumOfShare = numberOfShares ~/ 1.4;
                           });
                         },
                         minWidth: MediaQuery.of(context).size.width / 9.1,
@@ -482,7 +484,7 @@ class _GameScreenState extends State<GameScreen> {
                           color: const Color.fromARGB(255, 166, 170, 207),
                         ),
                         child: Text(
-                          (number_of_shares / 1.4).toStringAsFixed(0),
+                          (numberOfShares / 1.4).toStringAsFixed(0),
                           style: const TextStyle(
                             color: Color.fromARGB(255, 166, 170, 207),
                             fontFamily: 'OpenSans',
@@ -493,7 +495,7 @@ class _GameScreenState extends State<GameScreen> {
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            totalnumofshare = sharesbought;
+                            totalNumOfShare = sharesBought;
                           });
                         },
                         minWidth: MediaQuery.of(context).size.width / 9.1,
@@ -502,7 +504,7 @@ class _GameScreenState extends State<GameScreen> {
                           color: const Color.fromARGB(255, 166, 170, 207),
                         ),
                         child: Text(
-                          sharesbought.toStringAsFixed(0),
+                          sharesBought.toStringAsFixed(0),
                           style: const TextStyle(
                             color: Color.fromARGB(255, 166, 170, 207),
                             fontFamily: 'OpenSans',
@@ -520,9 +522,9 @@ class _GameScreenState extends State<GameScreen> {
                     children: <Widget>[
                       MaterialButton(
                         onPressed: () {
-                          if (totalnumofshare > 1) {
+                          if (totalNumOfShare > 1) {
                             setState(() {
-                              totalnumofshare--;
+                              totalNumOfShare--;
                             });
                           }
                         },
@@ -548,7 +550,7 @@ class _GameScreenState extends State<GameScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Center(
                           child: Text(
-                            totalnumofshare.toString(),
+                            totalNumOfShare.toString(),
                             style: const TextStyle(
                               color: Color(0xff1B1D38),
                               fontFamily: 'OpenSans',
@@ -561,7 +563,7 @@ class _GameScreenState extends State<GameScreen> {
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            totalnumofshare++;
+                            totalNumOfShare++;
                           });
                         },
                         color: const Color.fromARGB(255, 1, 208, 1),
@@ -588,15 +590,17 @@ class _GameScreenState extends State<GameScreen> {
                   children: <Widget>[
                     ElevatedButton(
                       onPressed: () {
-                        if (startstop) {
-                          if (price * totalnumofshare <= userwealth) {
-                            if (totalnumofshare > 0) {
+                        if (startStop) {
+                          if (price * totalNumOfShare <= userWealth) {
+                            if (totalNumOfShare > 0) {
                               setState(() {
-                                userwealth =
-                                    userwealth - (price * totalnumofshare);
-                                sharesbought = sharesbought + totalnumofshare;
-                                number_of_shares = userwealth ~/ price;
-                                print(sharesbought);
+                                userWealth =
+                                    userWealth - (price * totalNumOfShare);
+                                sharesBought = sharesBought + totalNumOfShare;
+                                numberOfShares = userWealth ~/ price;
+                                if (kDebugMode) {
+                                  print(sharesBought);
+                                }
                                 _showSnackBar();
                               });
                             } else {
@@ -658,7 +662,8 @@ class _GameScreenState extends State<GameScreen> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0xffFF0000)),
+                          const Color(0xffFF0000),
+                        ),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -681,15 +686,17 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if (startstop) {
-                          if (totalnumofshare <= sharesbought) {
-                            if (totalnumofshare > 0) {
+                        if (startStop) {
+                          if (totalNumOfShare <= sharesBought) {
+                            if (totalNumOfShare > 0) {
                               setState(() {
-                                userwealth =
-                                    userwealth + (totalnumofshare * price);
-                                sharesbought = sharesbought - totalnumofshare;
-                                number_of_shares = userwealth ~/ price;
-                                print(sharesbought);
+                                userWealth =
+                                    userWealth + (totalNumOfShare * price);
+                                sharesBought = sharesBought - totalNumOfShare;
+                                numberOfShares = userWealth ~/ price;
+                                if (kDebugMode) {
+                                  print(sharesBought);
+                                }
                                 _showSnackBarsell();
                               });
                             } else {
@@ -787,7 +794,7 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
             child: Text(
-              'Current Balance :   ₹${userwealth.toStringAsFixed(2)}',
+              'Current Balance :   ₹${userWealth.toStringAsFixed(2)}',
               style: const TextStyle(
                 color: Color(0xffffffff),
                 fontSize: 20,

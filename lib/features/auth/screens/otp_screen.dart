@@ -107,7 +107,8 @@ class _OtpScreenState extends State<OtpScreen> {
                               (route) => false,
                             );
                           }
-                          if (state is AuthVerifiedButNotRegisteredState) {
+                          if (state is AuthVerifiedButNotRegisteredState &&
+                              context.mounted) {
                             await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
@@ -117,7 +118,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               ),
                             );
                           }
-                          if (state is AuthErrorState) {
+                          if (state is AuthErrorState && context.mounted) {
                             showSnackBar(
                               context,
                               state.error,
@@ -127,7 +128,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         builder: (BuildContext context, AuthState state) {
                           if (state is AuthLoadingState) {
                             return const Center(
-                                child: CircularProgressIndicator());
+                              child: CircularProgressIndicator(),
+                            );
                           }
                           return SizedBox(
                             width: MediaQuery.of(context).size.width,

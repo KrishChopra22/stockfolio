@@ -1,19 +1,23 @@
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.config.dart"
+    - "**/firebase_options*.dart"
+    - "mason/**.dart"
+
 linter:
   rules:
     - always_declare_return_types
     - always_put_control_body_on_new_line
-    - always_put_required_named_parameters_first
-    - always_specify_types
     - always_use_package_imports
     - annotate_overrides
     - annotate_redeclares
     - avoid_annotating_with_dynamic
     - avoid_bool_literals_in_conditional_expressions
-    - avoid_catches_without_on_clauses
     - avoid_catching_errors
-    - avoid_classes_with_only_static_members
     - avoid_double_and_int_checks
     - avoid_dynamic_calls
     - avoid_empty_else
@@ -65,7 +69,6 @@ linter:
     - deprecated_consistency
     - deprecated_member_use_from_same_package
     - directives_ordering
-    - discarded_futures
     - do_not_use_environment
     - empty_catches
     - empty_constructor_bodies
@@ -153,7 +156,6 @@ linter:
     - sized_box_shrink_expand
     - slash_for_doc_comments
     - sort_child_properties_last
-    - sort_constructors_first
     - sort_pub_dependencies
     - sort_unnamed_constructors_first
     - test_types_in_equals
@@ -162,7 +164,6 @@ linter:
     - type_annotate_public_apis
     - type_init_formals
     - type_literal_in_constant_pattern
-    - unawaited_futures
     - unnecessary_await_in_return
     - unnecessary_brace_in_string_interps
     - unnecessary_breaks

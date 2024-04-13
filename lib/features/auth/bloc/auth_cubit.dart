@@ -87,7 +87,6 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } on FirebaseException catch (e) {
       emit(AuthErrorState(e.message.toString()));
-      print("ERRORRRR - \n${e.message.toString()}\n\n");
     }
     return false;
   }
@@ -106,6 +105,8 @@ class AuthCubit extends Cubit<AuthState> {
   @override
   void onChange(Change<AuthState> change) {
     super.onChange(change);
-    print("\nAuthCubit - $change\n");
+    if (kDebugMode) {
+      print('\nAuthCubit - $change\n');
+    }
   }
 }

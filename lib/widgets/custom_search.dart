@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stockfolio/features/home/repo/home_repo.dart';
 import 'package:stockfolio/features/stocks/screens/stock_details_screen.dart';
-import 'package:stockfolio/models/stock_data_model.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/utils/utils.dart';
 
@@ -54,10 +53,19 @@ class CustomSearchDelegate extends SearchDelegate<String> {
               subtitle: Text(searchResults[index].exchange!),
               trailing: Text(searchResults[index].price!.toString()),
               onTap: () async {
-                StockDataModel stockDataModel = await homeRepository
+                final stockDataModel = await homeRepository
                     .fetchStockData(searchResults[index].symbol!);
                 if (stockDataModel.name == null) {
-                  showSnackBar(context, "Sorry, this stock can't be processed");
+                  if (context.mounted) {
+                    showSnackBar(
+                      context,
+                      "Sorry, this stock can't be processed",
+                    );
+                  }
+
+                  return;
+                }
+                if (!context.mounted) {
                   return;
                 }
                 close(context, searchResults[index].name!);

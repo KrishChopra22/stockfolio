@@ -44,6 +44,8 @@ class UserCubit extends Cubit<UserState> {
   @override
   void onChange(Change<UserState> change) {
     super.onChange(change);
-    print("\nUserCubit - $change \n");
+    if (kDebugMode) {
+      print('\nUserCubit - $change \n');
+    }
   }
 }
