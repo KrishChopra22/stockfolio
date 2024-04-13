@@ -1,5 +1,12 @@
 class UserModel {
-  UserModel({
+  final String? uid;
+  final String? name;
+  final String? email;
+  final String? bio;
+  final String? profilePic;
+  final String? phoneNumber;
+
+  const UserModel({
     required this.uid,
     required this.name,
     required this.email,
@@ -7,32 +14,46 @@ class UserModel {
     required this.profilePic,
     required this.phoneNumber,
   });
-  String? uid;
-  String? name;
-  String? email;
-  String? bio;
-  String? profilePic;
-  String? phoneNumber;
 
   // from json
-  UserModel.fromJson(Map<String, dynamic> json) {
-    uid = json['uid'] ?? '';
-    name = json['name'] ?? '';
-    email = json['email'] ?? '';
-    bio = json['bio'] ?? '';
-    phoneNumber = json['phoneNumber'] ?? '';
-    profilePic = json['profilePic'] ?? '';
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      uid: json['uid'] ?? '',
+      name: json['name'] ?? '',
+      email: json['email'] ?? '',
+      bio: json['bio'] ?? '',
+      phoneNumber: json['phoneNumber'] ?? '',
+      profilePic: json['profilePic'] ?? '',
+    );
   }
 
   // to json
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['uid'] = uid;
-    data['name'] = name;
-    data['email'] = email;
-    data['bio'] = bio;
-    data['profilePic'] = profilePic;
-    data['phoneNumber'] = phoneNumber;
-    return data;
+    return {
+      'uid': uid,
+      'name': name,
+      'email': email,
+      'bio': bio,
+      'profilePic': profilePic,
+      'phoneNumber': phoneNumber,
+    };
+  }
+
+  UserModel copyWith({
+    String? uid,
+    String? name,
+    String? email,
+    String? bio,
+    String? profilePic,
+    String? phoneNumber,
+  }) {
+    return UserModel(
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      bio: bio ?? this.bio,
+      profilePic: profilePic ?? this.profilePic,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+    );
   }
 }

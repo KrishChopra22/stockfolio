@@ -13,11 +13,18 @@ class HomeRepository {
     final http.Response response =
         await financialModelRequest('/api/v3/stock/list');
     if (response.statusCode == 200) {
-      final jsonList = jsonDecode(response.body);
+      final jsonList = jsonDecode(response.body) as List;
       if (kDebugMode) {
         print('Stocks List fetched');
       }
-      return StockSearchModel.toList(jsonList);
+      return StockSearchModel.toList(
+        jsonList
+            .map(
+              (json) =>
+                  Map<String, dynamic>.from(json as Map<dynamic, dynamic>),
+            )
+            .toList(),
+      );
     } else {
       if (kDebugMode) {
         print(response.body);
@@ -32,11 +39,11 @@ class HomeRepository {
     final http.Response response =
         await financialModelRequest('/api/v3/quote/$stockSymbol');
     if (response.statusCode == 200) {
-      final jsonList = jsonDecode(response.body);
+      final jsonList = jsonDecode(response.body) as List;
       if (kDebugMode) {
         print('Stock Details fetched');
       }
-      return StockDataModel.fromJson(jsonList[0] as Map<String, dynamic>);
+      return StockDataModel.fromJson(jsonList[0]);
     } else {
       if (kDebugMode) {
         print(response.body);
@@ -55,11 +62,19 @@ class HomeRepository {
       'https://financialmodelingprep.com/api/v3/historical-price-full/$stockSymbol?from=$fromDate&to=$toDate&apikey=$kFinancialModelingPrepApi',
     );
     if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
+      final jsonData = jsonDecode(response.body) as Map;
       if (kDebugMode) {
         print('Stock Chart fetched');
       }
-      return StockChartModel.toList(jsonData['historical']);
+      final jsonList = jsonData['historical'] as List;
+      return StockChartModel.toList(
+        jsonList
+            .map(
+              (json) =>
+                  Map<String, dynamic>.from(json as Map<dynamic, dynamic>),
+            )
+            .toList(),
+      );
     } else {
       if (kDebugMode) {
         print(response.body);

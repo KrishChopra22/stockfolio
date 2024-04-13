@@ -42,21 +42,20 @@ class UserRepository {
     required UserModel userModel,
     required File profilePic,
   }) async {
-    userModel.uid = _firebaseAuth.currentUser!.uid;
+    final uid = _firebaseAuth.currentUser!.uid;
     // saving uid to prefs
-    await saveDataToPrefs(userModel.uid!);
+    await saveDataToPrefs(uid);
     // uploading image to firebase storage.
-    await storeFileToStorage('profilePic/${userModel.uid}', profilePic)
-        .then((String value) {
-      userModel.profilePic = value;
-    });
+    final uploadedProfilePic =
+        await storeFileToStorage('profilePic/$uid', profilePic);
 
+    final finalUserModel =
+        userModel.copyWith(uid: uid, profilePic: uploadedProfilePic);
     // uploading to database
-    await _firebaseFirestore
-        .collection('Users')
-        .doc(userModel.uid)
-        .set(userModel.toJson());
-    return userModel;
+    await _firebaseFirestore.collection('Users').doc(uid).set(
+          finalUserModel.toJson(),
+        );
+    return finalUserModel;
   }
 
   Future<String> storeFileToStorage(String ref, File file) async {
