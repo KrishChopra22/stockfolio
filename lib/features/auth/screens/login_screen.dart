@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: Text(
-                          '${selectedCountry.flagEmoji} +${selectedCountry.phoneCode}',
+                          ''''${selectedCountry.flagEmoji} +${selectedCountry.phoneCode}''',
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,
@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     }
-                    if (state is AuthErrorState) {
+                    if (state is AuthErrorState && context.mounted) {
                       showSnackBar(
                         context,
                         state.error,
@@ -164,7 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           } else {
                             await context.read<AuthCubit>().sendOtp(
-                                "+${selectedCountry.phoneCode}${phoneController.text.trim()}");
+                              ''''+${selectedCountry.phoneCode}${phoneController.text.trim()}''',
+                            );
                           }
                         },
                       ),

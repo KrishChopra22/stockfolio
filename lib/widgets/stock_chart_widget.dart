@@ -34,7 +34,7 @@ class _StockChartWidgetState extends State<StockChartWidget> {
     _prepareStockData();
   }
 
-  void _prepareStockData() async {
+  Future<void> _prepareStockData() async {
     flSpotValues = widget.stockChartList.map((item) {
       if (_minY > item.close!) {
         _minY = item.close!.toDouble();
@@ -64,12 +64,11 @@ class _StockChartWidgetState extends State<StockChartWidget> {
       titlesData: FlTitlesData(
         bottomTitles: AxisTitles(sideTitles: _bottomTitles()),
         leftTitles: AxisTitles(sideTitles: _leftTitles()),
-        rightTitles:
-            const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        rightTitles: const AxisTitles(),
+        topTitles: const AxisTitles(),
       ),
       borderData: FlBorderData(
-        border: Border.all(color: Colors.black),
+        border: Border.all(),
       ),
       minX: _minX,
       maxX: _maxX,
@@ -84,7 +83,7 @@ class _StockChartWidgetState extends State<StockChartWidget> {
       spots: flSpotValues,
       gradient: LinearGradient(
         colors: _gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-        stops: [0.25, 0.5, 0.75],
+        stops: const [0.25, 0.5, 0.75],
       ),
       isStrokeCapRound: true,
       dotData: const FlDotData(show: false),
@@ -93,7 +92,7 @@ class _StockChartWidgetState extends State<StockChartWidget> {
         gradient: LinearGradient(
           colors:
               _gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-          stops: [0.25, 0.5, 0.75],
+          stops: const [0.25, 0.5, 0.75],
         ),
         // gradientFrom: const Offset(0.5, 0),
         // gradientTo: const Offset(0.5, 1),

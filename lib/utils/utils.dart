@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -23,8 +24,13 @@ Future<File?> pickImage(BuildContext context) async {
       image = File(pickedImage.path);
     }
   } catch (e) {
-    showSnackBar(context, e.toString());
-    print(e.toString());
+    if (context.mounted) {
+      showSnackBar(context, e.toString());
+    }
+
+    if (kDebugMode) {
+      print(e);
+    }
   }
   return image;
 }
@@ -36,7 +42,9 @@ Future<http.Response> apiRequest(String url) async {
     final http.Response response = await http.get(uri);
     return response;
   } catch (e) {
-    print('Exception in FMP API - \n${e.toString()}');
+    if (kDebugMode) {
+      print('Exception in FMP API - \n$e');
+    }
     return http.Response('Try-Catch Error', 999);
   }
 }
@@ -52,7 +60,9 @@ Future<http.Response> financialModelRequest(String endpoint) async {
     final http.Response response = await http.get(uri);
     return response;
   } catch (e) {
-    print('Exception in FMP API - \n${e.toString()}');
+    if (kDebugMode) {
+      print('Exception in FMP API - \n$e');
+    }
     return http.Response('Try-Catch Error', 999);
   }
 }

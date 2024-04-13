@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stockfolio/features/auth/repo/auth_repo.dart';
-import 'package:stockfolio/features/user_registeration/repo/user_repo.dart';
+import 'package:stockfolio/features/user_registration/repo/user_repo.dart';
 import 'package:stockfolio/models/user_model.dart';
 
 part 'auth_state.dart';
@@ -87,7 +87,6 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } on FirebaseException catch (e) {
       emit(AuthErrorState(e.message.toString()));
-      print("ERRORRRR - \n${e.message.toString()}\n\n");
     }
     return false;
   }
@@ -106,6 +105,8 @@ class AuthCubit extends Cubit<AuthState> {
   @override
   void onChange(Change<AuthState> change) {
     super.onChange(change);
-    print("\nAuthCubit - $change\n");
+    if (kDebugMode) {
+      print('\nAuthCubit - $change\n');
+    }
   }
 }

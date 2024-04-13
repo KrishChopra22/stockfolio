@@ -14,6 +14,7 @@ class _BuyState extends State<Buy> {
   final TextEditingController quantityTextController = TextEditingController();
   final TextEditingController priceTextController = TextEditingController();
   final TextEditingController dateTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +74,8 @@ class _BuyState extends State<Buy> {
               ),
               Container(
                 constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width / 3),
+                  maxWidth: MediaQuery.of(context).size.width / 3,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: CustomTextField(

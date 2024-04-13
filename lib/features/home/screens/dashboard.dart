@@ -125,7 +125,7 @@ class _DashboardState extends State<Dashboard> {
               (route) => false,
             );
           }
-          if (state is AuthErrorState) {
+          if (state is AuthErrorState && context.mounted) {
             showSnackBar(
               context,
               state.error,

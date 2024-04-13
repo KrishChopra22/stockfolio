@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
               (route) => false,
             );
           }
-          if (state is AuthNotRegisteredState) {
+          if (state is AuthNotRegisteredState && context.mounted) {
             await Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (BuildContext context) => const LoginScreen(),

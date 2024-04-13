@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stockfolio/features/user_registeration/repo/user_repo.dart';
+import 'package:stockfolio/features/user_registration/repo/user_repo.dart';
 import 'package:stockfolio/models/user_model.dart';
 
 part 'user_state.dart';
@@ -44,6 +44,8 @@ class UserCubit extends Cubit<UserState> {
   @override
   void onChange(Change<UserState> change) {
     super.onChange(change);
-    print("\nUserCubit - $change \n");
+    if (kDebugMode) {
+      print('\nUserCubit - $change \n');
+    }
   }
 }

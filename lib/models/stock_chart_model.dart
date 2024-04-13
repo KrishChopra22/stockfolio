@@ -1,15 +1,20 @@
 class StockChartModel {
-  StockChartModel({required this.date, required this.close});
+  final DateTime? date;
+  final num? close;
 
-  DateTime? date;
-  num? close;
+  const StockChartModel({
+    required this.date,
+    required this.close,
+  });
 
-  StockChartModel.fromJson(Map<String, dynamic> json) {
-    date = DateTime.parse(json['date']);
-    close = json['close'];
+  factory StockChartModel.fromJson(Map<String, dynamic> json) {
+    return StockChartModel(
+      date: DateTime.tryParse(json['date']),
+      close: json['close'],
+    );
   }
 
-  static List<StockChartModel> toList(List<dynamic> items) {
-    return items.map((item) => StockChartModel.fromJson(item)).toList();
+  static List<StockChartModel> toList(List<Map<String, dynamic>> items) {
+    return items.map(StockChartModel.fromJson).toList();
   }
 }

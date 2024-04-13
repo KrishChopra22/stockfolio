@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
 import 'package:stockfolio/features/home/screens/dashboard.dart';
-import 'package:stockfolio/features/user_registeration/screens/user_registeration_screen.dart';
+import 'package:stockfolio/features/user_registration/screens/user_registration_screen.dart';
 import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 
@@ -107,17 +107,18 @@ class _OtpScreenState extends State<OtpScreen> {
                               (route) => false,
                             );
                           }
-                          if (state is AuthVerifiedButNotRegisteredState) {
+                          if (state is AuthVerifiedButNotRegisteredState &&
+                              context.mounted) {
                             await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    UserRegisterationScreen(
+                                    UserRegistrationScreen(
                                   phoneNumber: state.phoneNumber,
                                 ),
                               ),
                             );
                           }
-                          if (state is AuthErrorState) {
+                          if (state is AuthErrorState && context.mounted) {
                             showSnackBar(
                               context,
                               state.error,
@@ -127,7 +128,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         builder: (BuildContext context, AuthState state) {
                           if (state is AuthLoadingState) {
                             return const Center(
-                                child: CircularProgressIndicator());
+                              child: CircularProgressIndicator(),
+                            );
                           }
                           return SizedBox(
                             width: MediaQuery.of(context).size.width,
