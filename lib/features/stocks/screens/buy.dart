@@ -10,6 +10,14 @@ class Buy extends StatefulWidget {
 }
 
 class _BuyState extends State<Buy> {
+  int amount = 0;
+  void calculateAmount(String num1, String num2) {
+    print("inside amount");
+    setState(() {
+      amount = int.parse(num1) * int.parse(num2);
+    });
+  }
+
   final TextEditingController buyTextController = TextEditingController();
   final TextEditingController quantityTextController = TextEditingController();
   final TextEditingController priceTextController = TextEditingController();
@@ -17,6 +25,9 @@ class _BuyState extends State<Buy> {
 
   @override
   Widget build(BuildContext context) {
+    bool NSE = false;
+    bool BSE = false;
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -29,7 +40,6 @@ class _BuyState extends State<Buy> {
                 padding: const EdgeInsets.all(15),
                 child: CustomTextField(
                   hintText: 'Stock Symbol',
-                  icon: Icons.add,
                   inputType: TextInputType.text,
                   maxLines: 1,
                   controller: buyTextController,
@@ -40,19 +50,16 @@ class _BuyState extends State<Buy> {
                 constraints:
                     BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                 child: Row(
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: CustomTextField(
                           hintText: 'Quantity',
-                          icon: Icons.add,
                           inputType: TextInputType.text,
                           maxLines: 1,
                           controller: quantityTextController,
-                          labelText: 'Stock Name',
+                          labelText: 'Quantity',
                         ),
                       ),
                     ),
@@ -61,11 +68,14 @@ class _BuyState extends State<Buy> {
                         padding: const EdgeInsets.all(15),
                         child: CustomTextField(
                           hintText: 'Price',
-                          icon: Icons.add,
                           inputType: TextInputType.text,
                           maxLines: 1,
                           controller: priceTextController,
-                          labelText: 'Stock Name',
+                          labelText: 'Price',
+                          onChangedFunction: (value) {
+                            calculateAmount(
+                                quantityTextController.value.text, value,);
+                          },
                         ),
                       ),
                     ),
@@ -86,6 +96,27 @@ class _BuyState extends State<Buy> {
                     controller: dateTextController,
                     labelText: 'Date',
                   ),
+                ),
+              ),
+              Text('Amount : ${amount!}'),
+              ListTile(
+                title: const Text('NSE'),
+                leading: Radio<bool>(
+                  value: true,
+                  groupValue: NSE,
+                  onChanged: (value) {
+                    NSE = value!;
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('BSE'),
+                leading: Radio<bool>(
+                  value: true,
+                  groupValue: NSE,
+                  onChanged: (value) {
+                    BSE = value!;
+                  },
                 ),
               ),
               Padding(

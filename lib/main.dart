@@ -4,8 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stockfolio/constants/string_constants.dart';
 import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
 import 'package:stockfolio/features/auth/screens/splash_screen.dart';
+import 'package:stockfolio/features/stocks/screens/sell2.dart';
 import 'package:stockfolio/features/user_registration/bloc/user_cubit.dart';
 import 'package:stockfolio/firebase_options.dart';
+
+import 'features/stocks/screens/buy.dart';
+import 'features/stocks/screens/sell1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashScreen(),
+        home: const SellNext(),
       ),
     );
   }
