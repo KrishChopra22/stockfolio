@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     required this.hintText,
-    required this.icon,
+    this.icon,
     required this.inputType,
     required this.maxLines,
     required this.controller,
     required this.labelText,
+    this.onChangedFunction,
     super.key,
   });
   final String hintText;
   final String labelText;
-  final IconData icon;
+  final IconData? icon;
   final TextInputType inputType;
   final int maxLines;
   final TextEditingController controller;
+  final Function(String)? onChangedFunction;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,6 +30,7 @@ class CustomTextField extends StatelessWidget {
         onTapOutside: (PointerDownEvent event) =>
             FocusManager.instance.primaryFocus?.unfocus(),
         showCursor: true,
+        onChanged: onChangedFunction,
         cursorColor: Colors.deepPurple,
         controller: controller,
         keyboardType: inputType,
@@ -72,6 +75,7 @@ class CustomTextField extends StatelessWidget {
           border: InputBorder.none,
           fillColor: Colors.deepPurple.shade50,
           filled: true,
+
         ),
       ),
     );

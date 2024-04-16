@@ -16,6 +16,15 @@ class _SellNextState extends State<SellNext> {
   final TextEditingController priceTextController = TextEditingController();
   final TextEditingController dateTextController = TextEditingController();
 
+  int amount = 0;
+  void calculateAmount(String num1, String num2){
+    print("inside amount");
+    setState(() {
+      amount = int.parse(num1)*int.parse(num2);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +49,11 @@ class _SellNextState extends State<SellNext> {
                         padding: const EdgeInsets.all(15),
                         child: CustomTextField(
                           hintText: 'Quantity',
-                          icon: Icons.add,
+
                           inputType: TextInputType.text,
                           maxLines: 1,
                           controller: quantityTextController,
-                          labelText: 'Stock Name',
+                          labelText: 'Quantitu',
                         ),
                       ),
                     ),
@@ -53,17 +62,22 @@ class _SellNextState extends State<SellNext> {
                         padding: const EdgeInsets.all(15),
                         child: CustomTextField(
                           hintText: 'Price',
-                          icon: Icons.add,
+
                           inputType: TextInputType.text,
                           maxLines: 1,
                           controller: priceTextController,
-                          labelText: 'Stock Name',
+                          labelText: 'Price',
+                          onChangedFunction: (value){
+                            calculateAmount(quantityTextController.value.text,value );
+                          },
+
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
+              Text("Amount : ${amount!}"),
               Container(
                 constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width / 3,
