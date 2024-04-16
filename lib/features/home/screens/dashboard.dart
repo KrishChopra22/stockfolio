@@ -7,6 +7,8 @@ import 'package:stockfolio/models/user_model.dart';
 import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 
+import '../../buy_sell/screens/buy.dart';
+
 class Dashboard extends StatefulWidget {
   const Dashboard({required this.userModel, super.key});
 
@@ -44,6 +46,12 @@ class _DashboardState extends State<Dashboard> {
                 );
               },
             ),
+            CustomButton(text: 'Buy', onPressed: (){
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => const Buy()),
+              );
+            })
           ],
         ),
       ),

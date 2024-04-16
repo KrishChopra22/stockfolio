@@ -6,6 +6,8 @@ import 'package:stockfolio/features/auth/screens/splash_screen.dart';
 import 'package:stockfolio/features/user_registeration/bloc/user_cubit.dart';
 import 'package:stockfolio/firebase_options.dart';
 
+import 'features/buy_sell/screens/buy.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashScreen(),
+        home: SplashScreen(),
       ),
     );
   }
