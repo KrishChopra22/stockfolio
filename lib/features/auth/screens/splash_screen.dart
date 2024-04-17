@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
 import 'package:stockfolio/features/auth/screens/login_screen.dart';
-import 'package:stockfolio/features/home/screens/dashboard.dart';
+import 'package:stockfolio/features/dashboard/screens/dashboard.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

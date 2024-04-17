@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stockfolio/features/home/screens/dashboard.dart';
+import 'package:stockfolio/features/dashboard/screens/dashboard.dart';
 import 'package:stockfolio/features/user_registration/bloc/user_cubit.dart';
 import 'package:stockfolio/models/user_model.dart';
 import 'package:stockfolio/utils/utils.dart';
@@ -15,8 +15,7 @@ class UserRegistrationScreen extends StatefulWidget {
   final String phoneNumber;
 
   @override
-  State<UserRegistrationScreen> createState() =>
-      _UserRegistrationScreenState();
+  State<UserRegistrationScreen> createState() => _UserRegistrationScreenState();
 }
 
 class _UserRegistrationScreenState extends State<UserRegistrationScreen> {

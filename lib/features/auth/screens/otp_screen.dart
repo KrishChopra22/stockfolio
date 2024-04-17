@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
-import 'package:stockfolio/features/home/screens/dashboard.dart';
+import 'package:stockfolio/features/dashboard/screens/dashboard.dart';
 import 'package:stockfolio/features/user_registration/screens/user_registration_screen.dart';
+import 'package:stockfolio/utils/Colors.dart';
 import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
-
-import '../../../utils/Colors.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -33,11 +32,11 @@ class _OtpScreenState extends State<OtpScreen> {
           : Center(
               child: SingleChildScrollView(
                 child: Card(
-                  margin: EdgeInsets.symmetric(horizontal: 30,vertical: 30),
+                  margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                   color: AppColors.white,
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30,vertical: 80),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 80),
                     child: Column(
                       children: <Widget>[
                         // Align(

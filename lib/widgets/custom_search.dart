@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stockfolio/features/home/repo/home_repo.dart';
+import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
 import 'package:stockfolio/features/stocks/screens/stock_details_screen.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/utils/Colors.dart';
@@ -9,7 +9,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   CustomSearchDelegate({required this.stocksList});
 
   final List<StockSearchModel> stocksList;
-  HomeRepository homeRepository = HomeRepository();
+  DashboardRepository dashboardRepository = DashboardRepository();
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -58,12 +58,15 @@ class CustomSearchDelegate extends SearchDelegate<String> {
               child: ListTile(
                 title: Text(searchResults[index].name!),
                 subtitle: Text(searchResults[index].exchange!),
-                trailing: Text(searchResults[index].price!.toString(),style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),),
+                trailing: Text(
+                  searchResults[index].price!.toString(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
                 onTap: () async {
-                  final stockDataModel = await homeRepository
+                  final stockDataModel = await dashboardRepository
                       .fetchStockData(searchResults[index].symbol!);
                   if (stockDataModel.name == null) {
                     if (context.mounted) {
