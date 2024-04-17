@@ -6,6 +6,8 @@ import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_textfield.dart';
 
+import '../../../utils/Colors.dart';
+
 class Buy extends StatefulWidget {
   const Buy({super.key, required this.allStocksList});
 
@@ -78,7 +80,7 @@ class _BuyState extends State<Buy> {
                         });
                       }
                     },
-                    cursorColor: Colors.deepPurple.shade800,
+                    cursorColor: AppColors.black,
                     controller: buyTextController,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
@@ -86,7 +88,7 @@ class _BuyState extends State<Buy> {
                         margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
-                          color: Colors.deepPurple.shade800,
+                          color: AppColors.blue,
                         ),
                         child: const Icon(
                           Icons.search_rounded,
@@ -97,34 +99,34 @@ class _BuyState extends State<Buy> {
                       suffixIcon: Icon(
                         Icons.expand_circle_down_rounded,
                         size: 20,
-                        color: Colors.deepPurple.shade800,
+                        color: AppColors.blue,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
-                          color: Colors.transparent,
+                          color: AppColors.black,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Colors.deepPurple.shade800,
+                          color: AppColors.black,
                         ),
                       ),
                       hintText: 'Enter Stock Name',
                       labelText: 'Stock Name',
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w300,
                         color: Colors.grey,
                         fontSize: 16,
                       ),
                       labelStyle: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple.shade800,
+                        fontWeight: FontWeight.w300,
+                        color: AppColors.blue,
                         fontSize: 16,
                       ),
                       border: InputBorder.none,
-                      fillColor: Colors.deepPurple.shade50,
+                      fillColor: Colors.transparent,
                       filled: true,
                     ),
                   ),
@@ -143,7 +145,7 @@ class _BuyState extends State<Buy> {
                       ),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: AppColors.lightBlue,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: ListTile(
@@ -289,8 +291,8 @@ class _BuyState extends State<Buy> {
                     'Total Amount : $amount',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.deepPurple.shade900,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.blue,
                     ),
                   ),
                 ),

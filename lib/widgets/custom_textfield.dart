@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/Colors.dart';
+
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     required this.hintText,
@@ -33,7 +35,7 @@ class CustomTextField extends StatelessWidget {
             FocusManager.instance.primaryFocus?.unfocus(),
         showCursor: true,
         onChanged: onChangedFunction,
-        cursorColor: Colors.deepPurple.shade800,
+        cursorColor: AppColors.black,
         controller: controller,
         keyboardType: inputType,
         maxLines: maxLines,
@@ -42,8 +44,8 @@ class CustomTextField extends StatelessWidget {
           prefixIcon: Container(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              color: Colors.deepPurple.shade800,
+              borderRadius: BorderRadius.circular(25),
+              color: AppColors.blue,
             ),
             child: Icon(
               icon,
@@ -54,29 +56,29 @@ class CustomTextField extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
-              color: Colors.transparent,
+              color: Colors.black,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
-              color: Colors.deepPurple.shade800,
+              color: AppColors.blue
             ),
           ),
           hintText: hintText,
           labelText: labelText,
           hintStyle: const TextStyle(
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w300,
             color: Colors.grey,
             fontSize: 16,
           ),
           labelStyle: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Colors.deepPurple.shade800,
+            fontWeight: FontWeight.w300,
+            color: AppColors.blue,
             fontSize: 16,
           ),
           border: InputBorder.none,
-          fillColor: Colors.deepPurple.shade50,
+          fillColor: Colors.transparent,
           filled: true,
         ),
       ),

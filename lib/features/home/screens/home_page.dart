@@ -3,19 +3,37 @@ import 'package:stockfolio/features/dashboard/screens/game_screen.dart';
 import 'package:stockfolio/utils/Colors.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 
+import '../../../models/stock_transaction_model.dart';
+import '../../dashboard/repo/dashboard_repo.dart';
+import '../../stocks/screens/sell1.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage( {super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+
+  late TabController _tabController;
   @override
   void initState() {
     super.initState();
+    getUserStocksList();
+    _tabController = TabController(length: 2, vsync: this);
+
+    print(userHoldings);
   }
 
+  DashboardRepository dashboardRepository = DashboardRepository();
+  List<StockTransactionModel> userHoldings = <StockTransactionModel>[];
+
+  Future<void> getUserStocksList() async {
+    userHoldings = await dashboardRepository.fetchStockTransactionListFromFirebase();
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,6 +179,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            // CustomButton(
+            //   text: 'Play Game',
+            //   onPressed: () async {
+            //     await Navigator.of(context).push(
+            //       MaterialPageRoute(
+            //         builder: (BuildContext context) => const GameScreen(),
+            //       ),
+            //     );
+            //   },
+            // ),
             DefaultTabController(
               length: 2,
               child: Padding(
@@ -171,6 +199,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black),
                   labelColor: Colors.white,
                   indicatorSize: TabBarIndicatorSize.tab,
+                  // controller: _tabController,
                   tabs: const [
                     Tab(
                       child: Text('Current Holdings'),
@@ -189,16 +218,149 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            CustomButton(
-              text: 'Play Game',
-              onPressed: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const GameScreen(),
-                  ),
-                );
-              },
-            ),
+
+
+            // Padding(
+            //   padding: const EdgeInsets.all(15),
+            //   child: TextFormField(
+            //     style: const TextStyle(
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.w500,
+            //     ),
+            //     onTapOutside: (PointerDownEvent event) =>
+            //         FocusManager.instance.primaryFocus?.unfocus(),
+            //     showCursor: true,
+            //     onChanged: (value) {
+            //       searchText = value;
+            //       if (searchText.isEmpty) {
+            //         filteredStocksList.clear();
+            //       }
+            //       setState(() {
+            //         filteredStocksList = widget.userStocksList
+            //             .where(
+            //               (stock) => stock.stockSymbol!
+            //               .toLowerCase()
+            //               .contains(searchText.toLowerCase()),
+            //         )
+            //             .toList();
+            //       });
+            //     },
+            //     cursorColor: AppColors.black,
+            //     controller: searchController,
+            //     keyboardType: TextInputType.name,
+            //     decoration: InputDecoration(
+            //       prefixIcon: Container(
+            //         margin: const EdgeInsets.all(8),
+            //         decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(24),
+            //           color: AppColors.blue,
+            //         ),
+            //         child: const Icon(
+            //           Icons.search_rounded,
+            //           size: 20,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //       suffixIcon: Icon(
+            //         Icons.expand_circle_down_rounded,
+            //         size: 20,
+            //         color: AppColors.blue,
+            //       ),
+            //       enabledBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(10),
+            //         borderSide: const BorderSide(
+            //           color: AppColors.black,
+            //         ),
+            //       ),
+            //       focusedBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(10),
+            //         borderSide: BorderSide(
+            //           color: AppColors.black,
+            //         ),
+            //       ),
+            //       hintText: 'Enter Stock Symbol',
+            //       labelText: 'Stock Symbol',
+            //       hintStyle: const TextStyle(
+            //         fontWeight: FontWeight.w300,
+            //         color: Colors.grey,
+            //         fontSize: 16,
+            //       ),
+            //       labelStyle: TextStyle(
+            //         fontWeight: FontWeight.w300,
+            //         color: AppColors.blue,
+            //         fontSize: 16,
+            //       ),
+            //       border: InputBorder.none,
+            //       fillColor: Colors.transparent,
+            //       filled: true,
+            //     ),
+            //   ),
+            // ),
+            // TabBarView(
+            //   controller: _tabController,
+            //   children: [
+
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: userHoldings.length > 6
+                      ? 6
+                      : userHoldings.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 5,
+                      ),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: AppColors.lightBlue,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            userHoldings[index].stockSymbol!,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          subtitle: Text(
+                            userHoldings[index].exchangeName!,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          trailing: Text(
+                            userHoldings[index].price!.toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          onTap: () {
+                            // if (!context.mounted) {
+                            //   return;
+                            // }
+                            // setState(() {
+                            //   searchController.text =
+                            //   filteredStocksList[index].stockSymbol!;
+                            //   filteredStocksList.clear();
+                            // }
+                            // );
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+            //     Sell(
+            //       userStocksList: [],
+            //     ),
+            //   ],
+            // ),
+
+
           ],
         ),
       ),
