@@ -15,11 +15,6 @@ class StockChartWidget extends StatefulWidget {
 
 class _StockChartWidgetState extends State<StockChartWidget> {
   List<FlSpot> flSpotValues = <FlSpot>[];
-  final List<Color> _gradientColors = [
-    // const Color(0xFF6FFF7C),
-    // const Color(0xFF0087FF),
-    // const Color(0xFF5620FF),
-  ];
 
   final int _divider = 25;
   final int _leftLabelsCount = 6;
@@ -100,7 +95,6 @@ class _StockChartWidgetState extends State<StockChartWidget> {
         // gradientFrom: const Offset(0.5, 0),
         // gradientTo: const Offset(0.5, 1),
       ),
-
     );
   }
 
@@ -145,8 +139,8 @@ class _StockChartWidgetState extends State<StockChartWidget> {
     return FlGridData(
       drawVerticalLine: false,
       getDrawingHorizontalLine: (value) {
-        return const FlLine(
-          color: Colors.grey,
+        return FlLine(
+          color: Colors.grey.shade300,
           strokeWidth: 1,
         );
       },

@@ -15,8 +15,7 @@ class UserRegistrationScreen extends StatefulWidget {
   final String phoneNumber;
 
   @override
-  State<UserRegistrationScreen> createState() =>
-      _UserRegistrationScreenState();
+  State<UserRegistrationScreen> createState() => _UserRegistrationScreenState();
 }
 
 class _UserRegistrationScreenState extends State<UserRegistrationScreen> {

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
-import 'package:stockfolio/features/auth/screens/login_screen.dart';
+import 'package:stockfolio/features/analyze/screens/analyze_page.dart';
+import 'package:stockfolio/features/dashboard/screens/home_page.dart';
 import 'package:stockfolio/features/home/repo/home_repo.dart';
-import 'package:stockfolio/features/home/screens/game_screen.dart';
+import 'package:stockfolio/features/news/screens/news_page.dart';
+import 'package:stockfolio/features/stocks/screens/buy_sell.dart';
+import 'package:stockfolio/features/watchlist/screens/watchlist_page.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
+import 'package:stockfolio/models/stock_transaction_model.dart';
 import 'package:stockfolio/models/user_model.dart';
 import 'package:stockfolio/utils/Colors.dart';
-import 'package:stockfolio/utils/utils.dart';
-import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_search.dart';
-
-import '../../stocks/screens/buy.dart';
-import '../../stocks/screens/buy_sell.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({required this.userModel, super.key});
@@ -24,9 +21,21 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  int selectedPage = 0;
+  double centerContainerHeight = 0;
+  bool showButtons = false;
+
+  final _pageOptions = [
+    const HomePage(),
+    const AnalyzePage(),
+    const WatchListPage(),
+    const NewsPage(),
+  ];
+
   HomeRepository homeRepository = HomeRepository();
   bool fetched = false;
   List<StockSearchModel> fullStocksList = <StockSearchModel>[];
+  List<StockTransactionModel> userHoldings = <StockTransactionModel>[];
 
   @override
   void initState() {
@@ -41,6 +50,11 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  Future<void> getUserStocksList() async {
+    userHoldings = await homeRepository.fetchStockTransactionListFromFirebase();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,218 +63,154 @@ class _DashboardState extends State<Dashboard> {
         // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         backgroundColor: AppColors.blue,
         foregroundColor: AppColors.white,
-        title: const Text('StockFolio'),
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: GestureDetector(
-                onTap: () async {
-                  fetched
-                      ? await showSearch(
-                          context: context,
-                          delegate:
-                              CustomSearchDelegate(stocksList: fullStocksList),
-                        )
-                      : showSnackBar(
-                          context,
-                          "Please wait, we're fetching stocks",
-                        );
-                },
-                child: Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration:
-                  BoxDecoration(
-                    // boxShadow: <BoxShadow>[
-                    //   BoxShadow(
-                    //     color: Colors.grey,
-                    //     offset: Offset.fromDirection(1, 2),
-                    //     spreadRadius: 0.4,
-                    //     blurRadius: 1,
-                    //   ),
-                    // ],
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.black87),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          fetched
-                              ? '  Search Stocks/ETFs...'
-                              : '  Initialising...',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const Icon(Icons.search_rounded),
-                      ],
-                    ),
-                  ),
-                ),
+        leading: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.midBlue),
+              borderRadius: BorderRadius.circular(80),
+              image: DecorationImage(
+                image: NetworkImage(widget.userModel.profilePic!),
+                fit: BoxFit.cover,
               ),
             ),
-            Text(widget.userModel.uid!),
-            const SizedBox(height: 20),
-            Card(
-              color: AppColors.lightBlue,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal:MediaQuery.of(context).size.width * 0.05,
-                  vertical: MediaQuery.of(context).size.height * 0.02,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Total Invested ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text('Current Amount ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('100000',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Text('100000',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: AppColors.black,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('P/L: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                          ),
-                        ),
-                        Text('+100',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('10%',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
+          ),
+        ),
+        title: RichText(
+          text: const TextSpan(
+            children: [
+              TextSpan(
+                text: 'Stock',
+                style: TextStyle(color: Colors.white),
+              ),
+              TextSpan(
+                text: 'Folio',
+                style: TextStyle(color: AppColors.lightBlue),
+              ),
+            ],
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(6),
+            child: GestureDetector(
+              onTap: () async {
+                fetched
+                    ? await showSearch(
+                        context: context,
+                        delegate:
+                            CustomSearchDelegate(stocksList: fullStocksList),
+                      )
+                    : null;
+              },
+              child: fetched
+                  ? const Icon(
+                      Icons.search_rounded,
+                      size: 30,
+                      color: Colors.white,
                     )
-
-                  ],
-                ),
-              ),
-            ),
-            DefaultTabController(
-              length: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: TabBar(
-                  indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50), // Creates border
-                      color: Colors.black),
-                  labelColor: Colors.white,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  tabs: const [
-                    Tab(child: Text('Current Holdings'),
+                  : const SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
                     ),
-                    Tab(child: Text('Past Holdings'),),
-                  ],
-                  onTap: (value){
-                    if(value==0){
-                      // Navigator.push(context,
-                      //     // MaterialPageRoute(builder: (context)  ())
-                      // );
-                    }
-                  },// controller: ,
+            ),
+          ),
+        ],
+      ),
+      body: _pageOptions[selectedPage],
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        color: Colors.transparent,
+        height: 50,
+        width: double.maxFinite,
+        child: FloatingActionButton.small(
+          backgroundColor: Colors.white,
+          onPressed: () async {
+            await getUserStocksList();
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BuySell(
+                  userStocksList: userHoldings,
+                  allStocksList: fullStocksList,
                 ),
               ),
-            ),
-            CustomButton(
-              text: 'Play Game',
-              onPressed: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const GameScreen(),
-                  ),
-                );
-              },
-            ),
-            CustomButton(
-              text: 'Buy Sell',
-              onPressed: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const BuySell(),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: BlocListener<AuthCubit, AuthState>(
-        listener: (BuildContext context, AuthState state) async {
-          if (state is AuthInitialState) {
-            await Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (BuildContext context) => const LoginScreen(),
-              ),
-              (route) => false,
             );
-          }
-          if (state is AuthErrorState && context.mounted) {
-            showSnackBar(
-              context,
-              state.error,
-            );
-          }
-        },
-        child: CustomButton(
-          text: 'LogOut',
-          onPressed: () async {
-            await context.read<AuthCubit>().logOut();
           },
+          tooltip: 'Add Trade',
+          heroTag: 'Add_T',
+          shape: const CircleBorder(),
+          child: showButtons
+              ? const Icon(
+                  Icons.close_rounded,
+                  size: 30,
+                  color: AppColors.blue,
+                )
+              : const Icon(
+                  Icons.add_rounded,
+                  size: 32,
+                  color: AppColors.blue,
+                ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded, size: 24),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.stacked_line_chart_rounded, size: 24),
+            label: 'Analyze',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmarks_rounded, size: 24),
+            label: 'WatchList',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper_rounded, size: 24),
+            label: 'News',
+          ),
+        ],
+        selectedItemColor: AppColors.blue,
+        type: BottomNavigationBarType.fixed,
+        elevation: 10,
+        unselectedItemColor: AppColors.midBlue,
+        currentIndex: selectedPage,
+        backgroundColor: Colors.white,
+        onTap: (index) {
+          setState(() {
+            selectedPage = index;
+          });
+        },
+      ),
+      // floatingActionButton: BlocListener<AuthCubit, AuthState>(
+      //   listener: (BuildContext context, AuthState state) async {
+      //     if (state is AuthInitialState) {
+      //       await Navigator.of(context).pushAndRemoveUntil(
+      //         MaterialPageRoute(
+      //           builder: (BuildContext context) => const LoginScreen(),
+      //         ),
+      //         (route) => false,
+      //       );
+      //     }
+      //     if (state is AuthErrorState && context.mounted) {
+      //       showSnackBar(
+      //         context,
+      //         state.error,
+      //       );
+      //     }
+      //   },
+      //   child: CustomButton(
+      //     text: 'LogOut',
+      //     onPressed: () async {
+      //       await context.read<AuthCubit>().logOut();
+      //     },
+      //   ),
+      // ),
     );
   }
 }
