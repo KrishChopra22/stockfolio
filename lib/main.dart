@@ -10,6 +10,7 @@ import 'package:stockfolio/firebase_options.dart';
 
 import 'features/stocks/screens/buy.dart';
 import 'features/stocks/screens/sell1.dart';
+import 'features/stocks/screens/buy_sell.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SellNext(),
+        home:  BuySell(),
       ),
     );
   }

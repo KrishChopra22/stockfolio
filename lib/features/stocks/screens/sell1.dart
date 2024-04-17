@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stockfolio/features/stocks/screens/sell2.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
+import 'package:stockfolio/widgets/custom_stock_card.dart';
 import 'package:stockfolio/widgets/custom_textfield.dart';
 
 class Sell extends StatefulWidget {
@@ -11,6 +13,11 @@ class Sell extends StatefulWidget {
 
 class _SellState extends State<Sell> {
   final TextEditingController searchController = TextEditingController();
+  final stockSymbol = 'Apple Inc';
+  final leftFieldName = 'Quantity';
+  final leftFieldValue = 100;
+  final rightFieldName = 'Profit/Loss';
+  final rightFieldValue = '+ ₹500';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +38,26 @@ class _SellState extends State<Sell> {
               ),
             ),
             const Text('Current Holding'),
+            Padding(
+                padding: const EdgeInsets.all(12),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SellNext(),
+                      ),
+                    );
+                  },
+                  child: CustomStockCard(
+                    stockSymbol: stockSymbol,
+                    leftFieldName: leftFieldName,
+                    leftFieldValue: leftFieldValue,
+                    rightFieldName: rightFieldName,
+                    rightFieldValue: rightFieldValue,
+                  ),
+                ),
+            ),
             Column(
               children: <Widget>[
                 const Card(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_textfield.dart';
 
@@ -17,90 +16,114 @@ class _SellNextState extends State<SellNext> {
   final TextEditingController dateTextController = TextEditingController();
 
   int amount = 0;
-  void calculateAmount(String num1, String num2){
-    print("inside amount");
+  void calculateAmount(String num1, String num2) {
+
     setState(() {
-      amount = int.parse(num1)*int.parse(num2);
+      amount = int.parse(num1) * int.parse(num2);
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const Center(child: Text('New Trade')),
-              const Text('Owned'),
-              const Card(),
-              Container(
-                constraints:
-                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-                child: Row(
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: CustomTextField(
-                          hintText: 'Quantity',
-
-                          inputType: TextInputType.text,
-                          maxLines: 1,
-                          controller: quantityTextController,
-                          labelText: 'Quantitu',
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: CustomTextField(
-                          hintText: 'Price',
-
-                          inputType: TextInputType.text,
-                          maxLines: 1,
-                          controller: priceTextController,
-                          labelText: 'Price',
-                          onChangedFunction: (value){
-                            calculateAmount(quantityTextController.value.text,value );
-                          },
-
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+      appBar: AppBar(
+        title: const Text('Sell Stock'),
+      ),
+      body: ListView(children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const Center(
+              child: Text(
+                'Stock Name',
+                style: TextStyle(fontSize: 25),
               ),
-              Text("Amount : ${amount!}"),
-              Container(
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width / 3,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: CustomTextField(
-                    hintText: '',
-                    icon: Icons.date_range,
-                    inputType: TextInputType.datetime,
-                    maxLines: 1,
-                    controller: dateTextController,
-                    labelText: 'Date',
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 12),
+              child: Text('Owned'),
+            ),
+            const Card(),
+            Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: CustomTextField(
+                        hintText: 'Quantity',
+                        inputType: TextInputType.text,
+                        maxLines: 1,
+                        controller: quantityTextController,
+                        labelText: 'Quantity',
+                      ),
+                    ),
                   ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: CustomTextField(
+                        hintText: 'Price',
+                        inputType: TextInputType.text,
+                        maxLines: 1,
+                        controller: priceTextController,
+                        labelText: 'Price',
+                        onChangedFunction: (value) {
+                          calculateAmount(
+                            quantityTextController.value.text,
+                            value,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'Amount: $amount',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: CustomButton(text: 'Add Trade', onPressed: () {}),
+            ),
+            Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width / 3,
               ),
-            ],
-          ),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: CustomTextField(
+                  hintText: '',
+                  icon: Icons.date_range,
+                  inputType: TextInputType.datetime,
+                  maxLines: 1,
+                  controller: dateTextController,
+                  labelText: 'Date',
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomButton(text: 'Add Trade', onPressed: () {}),
+                ],
+              ),
+            ),
+          ],
         ),
+      ],
       ),
     );
   }

@@ -12,7 +12,7 @@ class Buy extends StatefulWidget {
 class _BuyState extends State<Buy> {
   int amount = 0;
   void calculateAmount(String num1, String num2) {
-    print("inside amount");
+
     setState(() {
       amount = int.parse(num1) * int.parse(num2);
     });
@@ -35,7 +35,7 @@ class _BuyState extends State<Buy> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const Center(child: Text('New Trade')),
+
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: CustomTextField(
@@ -98,7 +98,7 @@ class _BuyState extends State<Buy> {
                   ),
                 ),
               ),
-              Text('Amount : ${amount!}'),
+              Text('Amount : $amount'),
               ListTile(
                 title: const Text('NSE'),
                 leading: Radio<bool>(
