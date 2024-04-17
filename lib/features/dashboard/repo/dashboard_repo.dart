@@ -11,7 +11,7 @@ import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
 import 'package:stockfolio/utils/utils.dart';
 
-class HomeRepository {
+class DashboardRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 

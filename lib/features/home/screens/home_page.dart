@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stockfolio/features/home/screens/game_screen.dart';
+import 'package:stockfolio/features/dashboard/screens/game_screen.dart';
 import 'package:stockfolio/utils/Colors.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 

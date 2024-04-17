@@ -1,7 +1,7 @@
 import 'package:fk_toggle/fk_toggle.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stockfolio/features/home/repo/home_repo.dart';
+import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
 import 'package:stockfolio/features/stocks/screens/CandleStickLine.dart';
 import 'package:stockfolio/models/stock_chart_model.dart';
 import 'package:stockfolio/models/stock_data_model.dart';
@@ -18,7 +18,7 @@ class StockDetailsScreen extends StatefulWidget {
 }
 
 class _StockDetailsScreenState extends State<StockDetailsScreen> {
-  HomeRepository homeRepository = HomeRepository();
+  DashboardRepository dashboardRepository = DashboardRepository();
   List<StockChartModel> stockChartModelList = <StockChartModel>[];
   bool fetched = false;
 
@@ -30,7 +30,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen> {
 
   Future<void> getStockChartData() async {
     stockChartModelList =
-        await homeRepository.fetchStockChart(widget.stockData.symbol!);
+        await dashboardRepository.fetchStockChart(widget.stockData.symbol!);
     stockChartModelList = stockChartModelList.reversed.toList();
     setState(() {
       fetched = true;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stockfolio/features/analyze/screens/analyze_page.dart';
-import 'package:stockfolio/features/dashboard/screens/home_page.dart';
-import 'package:stockfolio/features/home/repo/home_repo.dart';
+import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
+import 'package:stockfolio/features/home/screens/home_page.dart';
 import 'package:stockfolio/features/news/screens/news_page.dart';
 import 'package:stockfolio/features/stocks/screens/buy_sell.dart';
 import 'package:stockfolio/features/watchlist/screens/watchlist_page.dart';
@@ -32,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
     const NewsPage(),
   ];
 
-  HomeRepository homeRepository = HomeRepository();
+  DashboardRepository dashboardRepository = DashboardRepository();
   bool fetched = false;
   List<StockSearchModel> fullStocksList = <StockSearchModel>[];
   List<StockTransactionModel> userHoldings = <StockTransactionModel>[];
@@ -44,14 +44,15 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Future<void> getStocksList() async {
-    fullStocksList = await homeRepository.fetchStocksList();
+    fullStocksList = await dashboardRepository.fetchStocksList();
     setState(() {
       fetched = true;
     });
   }
 
   Future<void> getUserStocksList() async {
-    userHoldings = await homeRepository.fetchStockTransactionListFromFirebase();
+    userHoldings =
+        await dashboardRepository.fetchStockTransactionListFromFirebase();
     setState(() {});
   }
 

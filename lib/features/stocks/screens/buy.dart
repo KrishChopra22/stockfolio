@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stockfolio/features/home/repo/home_repo.dart';
+import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
 import 'package:stockfolio/utils/utils.dart';
@@ -300,14 +300,16 @@ class _BuyState extends State<Buy> {
                     text: 'Buy',
                     onPressed: () async {
                       if (quantityTextController.text.isEmpty ||
-                          buyTextController.text.isEmpty) {
+                          buyTextController.text.isEmpty ||
+                          priceTextController.text.isEmpty) {
                         showSnackBar(
                           context,
-                          'Enter both Stock Name and Quantity',
+                          'Enter Stock Name, Quantity and Price to proceed',
                         );
                         return;
                       }
-                      HomeRepository _dashboardRepository = HomeRepository();
+                      DashboardRepository _dashboardRepository =
+                          DashboardRepository();
                       final StockTransactionModel stockTransactionModel =
                           StockTransactionModel(
                         stockSymbol: selectedStockSymbol,
