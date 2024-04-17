@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:stockfolio/keys/api_keys.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void showSnackBar(BuildContext context, String content) {
   ScaffoldMessenger.of(context).showSnackBar(
@@ -13,6 +14,13 @@ void showSnackBar(BuildContext context, String content) {
       duration: const Duration(milliseconds: 800),
     ),
   );
+}
+
+Future<void> openUrl(String url) async {
+  final Uri _url = Uri.parse(url);
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $url');
+  }
 }
 
 Future<File?> pickImage(BuildContext context) async {

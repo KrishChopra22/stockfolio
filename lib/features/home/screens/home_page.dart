@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:stockfolio/features/dashboard/screens/game_screen.dart';
+import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
+import 'package:stockfolio/models/stock_transaction_model.dart';
 import 'package:stockfolio/utils/Colors.dart';
-import 'package:stockfolio/widgets/custom_button.dart';
-
-import '../../../models/stock_transaction_model.dart';
-import '../../dashboard/repo/dashboard_repo.dart';
-import '../../stocks/screens/sell1.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage( {super.key});
-
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   @override
   void initState() {
     super.initState();
     getUserStocksList();
     _tabController = TabController(length: 2, vsync: this);
-
   }
 
   DashboardRepository dashboardRepository = DashboardRepository();
   List<StockTransactionModel> userHoldings = <StockTransactionModel>[];
 
   Future<void> getUserStocksList() async {
-    userHoldings = await dashboardRepository.fetchStockTransactionListFromFirebase();
+    userHoldings =
+        await dashboardRepository.fetchStockTransactionListFromFirebase();
     setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,7 +170,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -192,11 +188,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               DefaultTabController(
                 length: 2,
                 child: Padding(
-                  padding: const EdgeInsets.all(13.0),
+                  padding: const EdgeInsets.all(13),
                   child: TabBar(
                     indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50), // Creates border
-                        color: Colors.black),
+                      borderRadius: BorderRadius.circular(50), // Creates border
+                      color: Colors.black,
+                    ),
                     labelColor: Colors.white,
                     indicatorSize: TabBarIndicatorSize.tab,
                     // controller: _tabController,
@@ -209,69 +206,65 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       ),
                     ],
                     onTap: (value) {
-                      if (value == 0) {
-                      }
+                      setState(() {});
+                      if (value == 0) {}
                     }, // controller: ,
                   ),
                 ),
               ),
-        
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: userHoldings.length > 6
-                        ? 6
-                        : userHoldings.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 5,
-                        ),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: AppColors.lightBlue,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              userHoldings[index].stockSymbol!,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            subtitle: Text(
-                              userHoldings[index].exchangeName!,
-                              style: const TextStyle(
-                                fontSize: 12,
-                              ),
-                            ),
-                            trailing: Text(
-                              userHoldings[index].price!.toString(),
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            onTap: () {
-                              // if (!context.mounted) {
-                              //   return;
-                              // }
-                              // setState(() {
-                              //   searchController.text =
-                              //   filteredStocksList[index].stockSymbol!;
-                              //   filteredStocksList.clear();
-                              // }
-                              // );
-                            },
+
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: userHoldings.length > 6 ? 6 : userHoldings.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 5,
+                    ),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: AppColors.lightBlue,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          userHoldings[index].stockSymbol!,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                      );
-                    },
-                  ),
-        
-        
+                        subtitle: Text(
+                          userHoldings[index].exchangeName!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        trailing: Text(
+                          userHoldings[index].price!.toString(),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        onTap: () {
+                          // if (!context.mounted) {
+                          //   return;
+                          // }
+                          // setState(() {
+                          //   searchController.text =
+                          //   filteredStocksList[index].stockSymbol!;
+                          //   filteredStocksList.clear();
+                          // }
+                          // );
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

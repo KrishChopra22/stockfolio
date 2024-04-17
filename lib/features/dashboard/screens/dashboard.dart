@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stockfolio/features/analyze/screens/analyze_page.dart';
+import 'package:stockfolio/features/auth/bloc/auth_cubit.dart';
+import 'package:stockfolio/features/auth/screens/login_screen.dart';
 import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
 import 'package:stockfolio/features/home/screens/home_page.dart';
 import 'package:stockfolio/features/news/screens/news_page.dart';
@@ -9,6 +12,8 @@ import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
 import 'package:stockfolio/models/user_model.dart';
 import 'package:stockfolio/utils/Colors.dart';
+import 'package:stockfolio/utils/utils.dart';
+import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_search.dart';
 
 class Dashboard extends StatefulWidget {
@@ -66,13 +71,71 @@ class _DashboardState extends State<Dashboard> {
         foregroundColor: AppColors.white,
         leading: Padding(
           padding: const EdgeInsets.all(4),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.midBlue),
-              borderRadius: BorderRadius.circular(80),
-              image: DecorationImage(
-                image: NetworkImage(widget.userModel.profilePic!),
-                fit: BoxFit.cover,
+          child: GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: SizedBox(
+                    height: 120,
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Are you sure, you want to logout?',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const Spacer(),
+                        BlocListener<AuthCubit, AuthState>(
+                          listener:
+                              (BuildContext context, AuthState state) async {
+                            if (state is AuthInitialState) {
+                              await Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const LoginScreen(),
+                                ),
+                                (route) => false,
+                              );
+                            }
+                            if (state is AuthErrorState && context.mounted) {
+                              showSnackBar(
+                                context,
+                                state.error,
+                              );
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: SizedBox(
+                              height: 50,
+                              width: double.maxFinite,
+                              child: CustomButton(
+                                text: 'LogOut',
+                                onPressed: () async {
+                                  await context.read<AuthCubit>().logOut();
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.midBlue),
+                borderRadius: BorderRadius.circular(80),
+                image: DecorationImage(
+                  image: NetworkImage(widget.userModel.profilePic!),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -127,7 +190,7 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButton: Container(
         color: Colors.transparent,
         height: 50,
-        width: double.maxFinite,
+        width: 50,
         child: FloatingActionButton.small(
           backgroundColor: Colors.white,
           onPressed: () async {

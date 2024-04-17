@@ -33,6 +33,7 @@ dependencies:
   pinput: 4.0.0
 
   shared_preferences: 2.2.3
+  url_launcher: ^6.2.6
 
 dev_dependencies:
   flutter_lints: ^3.0.0
