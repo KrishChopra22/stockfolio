@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     getUserStocksList();
     _tabController = TabController(length: 2, vsync: this);
 
-    print(userHoldings);
   }
 
   DashboardRepository dashboardRepository = DashboardRepository();
@@ -210,95 +209,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ],
                   onTap: (value) {
                     if (value == 0) {
-                      // Navigator.push(context,
-                      //     // MaterialPageRoute(builder: (context)  ())
-                      // );
                     }
                   }, // controller: ,
                 ),
               ),
             ),
-
-
-            // Padding(
-            //   padding: const EdgeInsets.all(15),
-            //   child: TextFormField(
-            //     style: const TextStyle(
-            //       fontSize: 16,
-            //       fontWeight: FontWeight.w500,
-            //     ),
-            //     onTapOutside: (PointerDownEvent event) =>
-            //         FocusManager.instance.primaryFocus?.unfocus(),
-            //     showCursor: true,
-            //     onChanged: (value) {
-            //       searchText = value;
-            //       if (searchText.isEmpty) {
-            //         filteredStocksList.clear();
-            //       }
-            //       setState(() {
-            //         filteredStocksList = widget.userStocksList
-            //             .where(
-            //               (stock) => stock.stockSymbol!
-            //               .toLowerCase()
-            //               .contains(searchText.toLowerCase()),
-            //         )
-            //             .toList();
-            //       });
-            //     },
-            //     cursorColor: AppColors.black,
-            //     controller: searchController,
-            //     keyboardType: TextInputType.name,
-            //     decoration: InputDecoration(
-            //       prefixIcon: Container(
-            //         margin: const EdgeInsets.all(8),
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(24),
-            //           color: AppColors.blue,
-            //         ),
-            //         child: const Icon(
-            //           Icons.search_rounded,
-            //           size: 20,
-            //           color: Colors.white,
-            //         ),
-            //       ),
-            //       suffixIcon: Icon(
-            //         Icons.expand_circle_down_rounded,
-            //         size: 20,
-            //         color: AppColors.blue,
-            //       ),
-            //       enabledBorder: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(10),
-            //         borderSide: const BorderSide(
-            //           color: AppColors.black,
-            //         ),
-            //       ),
-            //       focusedBorder: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(10),
-            //         borderSide: BorderSide(
-            //           color: AppColors.black,
-            //         ),
-            //       ),
-            //       hintText: 'Enter Stock Symbol',
-            //       labelText: 'Stock Symbol',
-            //       hintStyle: const TextStyle(
-            //         fontWeight: FontWeight.w300,
-            //         color: Colors.grey,
-            //         fontSize: 16,
-            //       ),
-            //       labelStyle: TextStyle(
-            //         fontWeight: FontWeight.w300,
-            //         color: AppColors.blue,
-            //         fontSize: 16,
-            //       ),
-            //       border: InputBorder.none,
-            //       fillColor: Colors.transparent,
-            //       filled: true,
-            //     ),
-            //   ),
-            // ),
-            // TabBarView(
-            //   controller: _tabController,
-            //   children: [
 
                 ListView.builder(
                   shrinkWrap: true,
@@ -354,11 +269,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     );
                   },
                 ),
-            //     Sell(
-            //       userStocksList: [],
-            //     ),
-            //   ],
-            // ),
 
 
           ],
