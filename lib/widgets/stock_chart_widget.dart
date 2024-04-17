@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stockfolio/models/stock_chart_model.dart';
+import 'package:stockfolio/utils/Colors.dart';
 
 class StockChartWidget extends StatefulWidget {
   const StockChartWidget({required this.stockChartList, super.key});
@@ -15,9 +16,9 @@ class StockChartWidget extends StatefulWidget {
 class _StockChartWidgetState extends State<StockChartWidget> {
   List<FlSpot> flSpotValues = <FlSpot>[];
   final List<Color> _gradientColors = [
-    const Color(0xFF6FFF7C),
-    const Color(0xFF0087FF),
-    const Color(0xFF5620FF),
+    // const Color(0xFF6FFF7C),
+    // const Color(0xFF0087FF),
+    // const Color(0xFF5620FF),
   ];
 
   final int _divider = 25;
@@ -81,22 +82,25 @@ class _StockChartWidgetState extends State<StockChartWidget> {
   LineChartBarData _lineBarData() {
     return LineChartBarData(
       spots: flSpotValues,
-      gradient: LinearGradient(
-        colors: _gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-        stops: const [0.25, 0.5, 0.75],
-      ),
+      color: AppColors.blue,
+      // gradient: LinearGradient(
+      //   colors: AppColors.yellow,
+      //   stops: const [0.25, 0.5, 0.75],
+      // ),
       isStrokeCapRound: true,
       dotData: const FlDotData(show: false),
       belowBarData: BarAreaData(
         show: true,
-        gradient: LinearGradient(
-          colors:
-              _gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-          stops: const [0.25, 0.5, 0.75],
-        ),
+        color: AppColors.lightBlue,
+        // gradient: LinearGradient(
+        //   colors:
+        //       _gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+        //   stops: const [0.25, 0.5, 0.75],
+        // ),
         // gradientFrom: const Offset(0.5, 0),
         // gradientTo: const Offset(0.5, 1),
       ),
+
     );
   }
 
@@ -142,7 +146,7 @@ class _StockChartWidgetState extends State<StockChartWidget> {
       drawVerticalLine: false,
       getDrawingHorizontalLine: (value) {
         return const FlLine(
-          color: Colors.white12,
+          color: Colors.grey,
           strokeWidth: 1,
         );
       },

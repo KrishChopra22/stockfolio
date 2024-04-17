@@ -7,6 +7,7 @@ import 'package:stockfolio/features/auth/screens/splash_screen.dart';
 import 'package:stockfolio/features/stocks/screens/sell2.dart';
 import 'package:stockfolio/features/user_registration/bloc/user_cubit.dart';
 import 'package:stockfolio/firebase_options.dart';
+import 'package:stockfolio/utils/Colors.dart';
 
 import 'features/stocks/screens/buy.dart';
 import 'features/stocks/screens/sell1.dart';
@@ -38,10 +39,10 @@ class MyApp extends StatelessWidget {
         title: StringConstants.appName,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.blue),
           useMaterial3: true,
         ),
-        home:  BuySell(),
+        home:  const SplashScreen(),
       ),
     );
   }

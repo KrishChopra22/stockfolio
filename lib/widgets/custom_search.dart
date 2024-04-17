@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stockfolio/features/home/repo/home_repo.dart';
 import 'package:stockfolio/features/stocks/screens/stock_details_screen.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
+import 'package:stockfolio/utils/Colors.dart';
 import 'package:stockfolio/utils/utils.dart';
 
 class CustomSearchDelegate extends SearchDelegate<String> {
@@ -42,40 +43,50 @@ class CustomSearchDelegate extends SearchDelegate<String> {
       itemCount: searchResults.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 5,
+          ),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.deepPurple[50],
-              borderRadius: BorderRadius.circular(12),
+              color: AppColors.lightBlue,
+              borderRadius: BorderRadius.circular(15),
             ),
-            child: ListTile(
-              title: Text(searchResults[index].name!),
-              subtitle: Text(searchResults[index].exchange!),
-              trailing: Text(searchResults[index].price!.toString()),
-              onTap: () async {
-                final stockDataModel = await homeRepository
-                    .fetchStockData(searchResults[index].symbol!);
-                if (stockDataModel.name == null) {
-                  if (context.mounted) {
-                    showSnackBar(
-                      context,
-                      "Sorry, this stock can't be processed",
-                    );
-                  }
+            child: InkWell(
+              splashColor: AppColors.blue,
+              focusColor: AppColors.midBlue,
+              child: ListTile(
+                title: Text(searchResults[index].name!),
+                subtitle: Text(searchResults[index].exchange!),
+                trailing: Text(searchResults[index].price!.toString(),style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),),
+                onTap: () async {
+                  final stockDataModel = await homeRepository
+                      .fetchStockData(searchResults[index].symbol!);
+                  if (stockDataModel.name == null) {
+                    if (context.mounted) {
+                      showSnackBar(
+                        context,
+                        "Sorry, this stock can't be processed",
+                      );
+                    }
 
-                  return;
-                }
-                if (!context.mounted) {
-                  return;
-                }
-                close(context, searchResults[index].name!);
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        StockDetailsScreen(stockData: stockDataModel),
-                  ),
-                );
-              },
+                    return;
+                  }
+                  if (!context.mounted) {
+                    return;
+                  }
+                  close(context, searchResults[index].name!);
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          StockDetailsScreen(stockData: stockDataModel),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         );
