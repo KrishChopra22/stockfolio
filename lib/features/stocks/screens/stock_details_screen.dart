@@ -49,7 +49,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen> {
                   height: 100,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: AppColors.lightBlue,
+                    color: AppColors.blue,
                     borderRadius: BorderRadius.circular(80),
                   ),
                   child: Padding(
