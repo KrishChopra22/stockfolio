@@ -56,6 +56,7 @@ class _SellNextState extends State<SellNext> {
                       padding: const EdgeInsets.all(15),
                       child: CustomTextField(
                         hintText: 'Quantity',
+                        icon: Icons.onetwothree_rounded,
                         inputType: TextInputType.text,
                         maxLines: 1,
                         controller: quantityTextController,
@@ -68,6 +69,7 @@ class _SellNextState extends State<SellNext> {
                       padding: const EdgeInsets.all(15),
                       child: CustomTextField(
                         hintText: 'Price',
+                        icon: Icons.currency_rupee,
                         inputType: TextInputType.text,
                         maxLines: 1,
                         controller: priceTextController,

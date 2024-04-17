@@ -4,6 +4,8 @@ import 'package:stockfolio/features/stocks/screens/sell1.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
 
+import '../../../utils/Colors.dart';
+
 class BuySell extends StatefulWidget {
   const BuySell({
     super.key,
@@ -18,12 +20,6 @@ class BuySell extends StatefulWidget {
 }
 
 class _BuySellState extends State<BuySell> with SingleTickerProviderStateMixin {
-  Widget appBarTitle = const Center(
-    child: Text(
-      'Add Trade',
-      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    ),
-  );
   late TabController _tabController;
   @override
   void initState() {
@@ -35,7 +31,11 @@ class _BuySellState extends State<BuySell> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: appBarTitle,
+        backgroundColor: AppColors.white,
+        title: Text(
+          'Add Trade',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+        ),
         bottom: TabBar(
           indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(50), // Creates border
@@ -60,17 +60,20 @@ class _BuySellState extends State<BuySell> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          Buy(
-            allStocksList: widget.allStocksList,
+      body:
+
+
+          TabBarView(
+            controller: _tabController,
+            children: [
+              Buy(
+                allStocksList: widget.allStocksList,
+              ),
+              Sell(
+                userStocksList: widget.userStocksList,
+              ),
+            ],
           ),
-          Sell(
-            userStocksList: widget.userStocksList,
-          ),
-        ],
-      ),
     );
   }
 }

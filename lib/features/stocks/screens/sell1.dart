@@ -3,6 +3,8 @@ import 'package:stockfolio/features/stocks/screens/sell2.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 
+import '../../../utils/Colors.dart';
+
 class Sell extends StatefulWidget {
   const Sell({super.key, required this.userStocksList});
 
@@ -49,7 +51,7 @@ class _SellState extends State<Sell> {
                           .toList();
                     });
                   },
-                  cursorColor: Colors.deepPurple.shade800,
+                  cursorColor: AppColors.black,
                   controller: searchController,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
@@ -57,7 +59,7 @@ class _SellState extends State<Sell> {
                       margin: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
-                        color: Colors.deepPurple.shade800,
+                        color: AppColors.blue,
                       ),
                       child: const Icon(
                         Icons.search_rounded,
@@ -68,34 +70,34 @@ class _SellState extends State<Sell> {
                     suffixIcon: Icon(
                       Icons.expand_circle_down_rounded,
                       size: 20,
-                      color: Colors.deepPurple.shade800,
+                      color: AppColors.blue,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
-                        color: Colors.transparent,
+                        color: AppColors.black,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
-                        color: Colors.deepPurple.shade800,
+                        color: AppColors.black,
                       ),
                     ),
                     hintText: 'Enter Stock Symbol',
                     labelText: 'Stock Symbol',
                     hintStyle: const TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w300,
                       color: Colors.grey,
                       fontSize: 16,
                     ),
                     labelStyle: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.deepPurple.shade800,
+                      fontWeight: FontWeight.w300,
+                      color: AppColors.blue,
                       fontSize: 16,
                     ),
                     border: InputBorder.none,
-                    fillColor: Colors.deepPurple.shade50,
+                    fillColor: Colors.transparent,
                     filled: true,
                   ),
                 ),
@@ -114,7 +116,7 @@ class _SellState extends State<Sell> {
                     ),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: AppColors.lightBlue,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ListTile(
