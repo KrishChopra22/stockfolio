@@ -32,10 +32,10 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Card(
-            margin: EdgeInsets.symmetric(horizontal: 30,vertical: 30),
+            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
             color: AppColors.white,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 80),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
               child: Column(
                 children: <Widget>[
                   const SizedBox(height: 300),
@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefixIcon: Container(
                         padding: const EdgeInsets.all(8),
                         alignment: Alignment.centerLeft,
-                        width: 90,
+                        width: 80,
                         child: InkWell(
                           onTap: () {
                             showCountryPicker(
@@ -112,7 +112,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           child: Text(
-                            ' ''${selectedCountry.flagEmoji} +${selectedCountry.phoneCode}''',
+                            ' '
+                            '${selectedCountry.flagEmoji} +${selectedCountry.phoneCode}'
+                            '',
                             style: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,
@@ -136,7 +138,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (state is AuthOtpCodeSentState) {
                         await Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (BuildContext context) => const OtpScreen(),
+                            builder: (BuildContext context) =>
+                                const OtpScreen(),
                           ),
                         );
                       }
