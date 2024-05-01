@@ -96,7 +96,7 @@ class _BuyState extends State<Buy> {
                           color: Colors.white,
                         ),
                       ),
-                      suffixIcon: Icon(
+                      suffixIcon: const Icon(
                         Icons.expand_circle_down_rounded,
                         size: 20,
                         color: AppColors.blue,
@@ -109,7 +109,7 @@ class _BuyState extends State<Buy> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: AppColors.black,
                         ),
                       ),
@@ -120,7 +120,7 @@ class _BuyState extends State<Buy> {
                         color: Colors.grey,
                         fontSize: 16,
                       ),
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontWeight: FontWeight.w300,
                         color: AppColors.blue,
                         fontSize: 16,
@@ -289,7 +289,7 @@ class _BuyState extends State<Buy> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     'Total Amount : $amount',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: AppColors.blue,
@@ -310,19 +310,19 @@ class _BuyState extends State<Buy> {
                         );
                         return;
                       }
-                      DashboardRepository _dashboardRepository =
+                      final DashboardRepository dashboardRepository =
                           DashboardRepository();
                       final StockTransactionModel stockTransactionModel =
                           StockTransactionModel(
                         stockSymbol: selectedStockSymbol,
                         userId: '',
-                        price: amount,
+                        price: double.parse(priceTextController.text),
                         quantity: int.parse(quantityTextController.text),
                         exchangeName: exchangeTextController.text,
                         isBought: true,
                         transactionDate: DateTime.now(),
                       );
-                      final response = await _dashboardRepository
+                      final response = await dashboardRepository
                           .saveStockTransactionToFirebase(
                         stockTransaction: stockTransactionModel,
                       );
