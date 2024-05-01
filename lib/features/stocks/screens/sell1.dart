@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stockfolio/features/stocks/screens/sell2.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
+import 'package:stockfolio/utils/utils.dart';
 import 'package:stockfolio/widgets/custom_button.dart';
 
 import '../../../utils/Colors.dart';
@@ -17,6 +18,7 @@ class Sell extends StatefulWidget {
 class _SellState extends State<Sell> {
   final TextEditingController searchController = TextEditingController();
   String searchText = '';
+  String selectedStockExc = '';
   List<StockTransactionModel> filteredStocksList = [];
   @override
   Widget build(BuildContext context) {
@@ -105,8 +107,8 @@ class _SellState extends State<Sell> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: filteredStocksList.length > 6
-                    ? 6
+                itemCount: filteredStocksList.length > 5
+                    ? 5
                     : filteredStocksList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
@@ -147,6 +149,8 @@ class _SellState extends State<Sell> {
                           setState(() {
                             searchController.text =
                                 filteredStocksList[index].stockSymbol!;
+                            selectedStockExc =
+                                filteredStocksList[index].exchangeName!;
                             filteredStocksList.clear();
                           });
                         },
@@ -164,11 +168,22 @@ class _SellState extends State<Sell> {
                 child: CustomButton(
                   text: 'Add Trade',
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SellNext(),
-                      ),
-                    );
+                    if (searchController.text.isNotEmpty) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SellNext(
+                            selectedStockSymbol: searchController.text,
+                            userStocksList: widget.userStocksList,
+                            selectedStockExchange: selectedStockExc,
+                          ),
+                        ),
+                      );
+                    } else {
+                      showSnackBar(
+                        context,
+                        'Please enter the stock symbol to sell',
+                      );
+                    }
                   },
                 ),
               ),

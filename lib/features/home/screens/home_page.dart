@@ -216,8 +216,10 @@ class _HomePageState extends State<HomePage>
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: userHoldings.length > 6 ? 6 : userHoldings.length,
+                itemCount: userHoldings.length,
                 itemBuilder: (BuildContext context, int index) {
+                  double tradeAmount = userHoldings[index].price! *
+                      userHoldings[index].quantity!;
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 18,
@@ -243,7 +245,7 @@ class _HomePageState extends State<HomePage>
                           ),
                         ),
                         trailing: Text(
-                          userHoldings[index].price!.toString(),
+                          tradeAmount.toStringAsFixed(2),
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
