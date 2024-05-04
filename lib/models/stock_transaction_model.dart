@@ -1,5 +1,5 @@
 class StockTransactionModel {
-  const StockTransactionModel({
+  StockTransactionModel({
     required this.stockSymbol,
     required this.userId,
     required this.price,
@@ -10,11 +10,11 @@ class StockTransactionModel {
   });
   final String? stockSymbol;
   final String? userId;
-  final double? price;
-  final int? quantity;
+  double? price;
+  int? quantity;
   final String? exchangeName;
   final bool? isBought;
-  final DateTime? transactionDate;
+  DateTime? transactionDate;
 
   // from json
   factory StockTransactionModel.fromJson(Map<String, dynamic> json) {

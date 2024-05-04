@@ -103,6 +103,15 @@ class DashboardRepository {
     return finalStockTransaction;
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getStocksStream() {
+    final uid = _firebaseAuth.currentUser!.uid;
+    final stocksStream = _firebaseFirestore
+        .collection('StockTransactions')
+        .where('userId', isEqualTo: uid)
+        .snapshots();
+    return stocksStream;
+  }
+
   Future<List<StockTransactionModel>>
       fetchStockTransactionListFromFirebase() async {
     final uid = _firebaseAuth.currentUser!.uid;
