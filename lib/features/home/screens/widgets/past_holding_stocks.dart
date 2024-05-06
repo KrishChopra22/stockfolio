@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:stockfolio/models/stock_transaction_model.dart';
+import 'package:stockfolio/utils/Colors.dart';
 
-import '../../../../models/stock_transaction_model.dart';
-import '../../../../utils/Colors.dart';
 class PastHoldingStocks extends StatelessWidget {
   const PastHoldingStocks({
     super.key,
@@ -17,19 +17,15 @@ class PastHoldingStocks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // groupedUserHoldings.forEach((element) {
-    //   print(element.toJson().toString());
-    // });
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: groupedUserHoldings.length,
       itemBuilder: (BuildContext context, int index) {
-        double tradeAmount = groupedUserHoldings[index].price! *
+        final double tradeAmount = groupedUserHoldings[index].price! *
             groupedUserHoldings[index].quantity!;
 
-        // print("past index ----->$index");
-        if(groupedUserHoldings[index].isBought==false) {
+        if (groupedUserHoldings[index].isBought == false) {
           return Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 18,
@@ -113,8 +109,9 @@ class PastHoldingStocks extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '${timeFormat.format(
-                          groupedUserHoldings[index].transactionDate!)}',
+                      timeFormat.format(
+                        groupedUserHoldings[index].transactionDate!,
+                      ),
                       style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.midBlue,
@@ -122,8 +119,9 @@ class PastHoldingStocks extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${dateFormat.format(
-                          groupedUserHoldings[index].transactionDate!)}',
+                      dateFormat.format(
+                        groupedUserHoldings[index].transactionDate!,
+                      ),
                       style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.midBlue,
@@ -132,25 +130,14 @@ class PastHoldingStocks extends StatelessWidget {
                     ),
                   ],
                 ),
-                onTap: () {
-                  // if (!context.mounted) {
-                  //   return;
-                  // }
-                  // setState(() {
-                  //   searchController.text =
-                  //   filteredStocksList[index].stockSymbol!;
-                  //   filteredStocksList.clear();
-                  // }
-                  // );
-                },
+                onTap: () {},
               ),
             ),
           );
-        }else{
+        } else {
           return Container();
         }
       },
-
     );
   }
 }

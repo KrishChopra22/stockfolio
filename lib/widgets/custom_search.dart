@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:like_button/like_button.dart';
 import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
 import 'package:stockfolio/features/stocks/screens/stock_details_screen.dart';
+import 'package:stockfolio/features/watchlist/repo/watchlist_repo.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
+import 'package:stockfolio/models/stock_watchlist_model.dart';
 import 'package:stockfolio/utils/Colors.dart';
 import 'package:stockfolio/utils/utils.dart';
 
@@ -10,6 +14,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   final List<StockSearchModel> stocksList;
   DashboardRepository dashboardRepository = DashboardRepository();
+  WatchListRepository watchListRepository = WatchListRepository();
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -58,12 +63,40 @@ class CustomSearchDelegate extends SearchDelegate<String> {
               child: ListTile(
                 title: Text(searchResults[index].name!),
                 subtitle: Text(searchResults[index].exchange!),
-                trailing: Text(
-                  searchResults[index].price!.toString(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
+                trailing: Column(
+                  children: [
+                    Text(
+                      searchResults[index].price!.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                      width: 40,
+                      child: LikeButton(
+                        onTap: (isTapped) async {
+                          StockWatchListModel stockWatchListModel =
+                              StockWatchListModel(
+                            stockSymbol: searchResults[index].symbol,
+                            stockName: searchResults[index].name,
+                            userId: 'none',
+                            price: searchResults[index].price!.toDouble(),
+                            exchangeName: searchResults[index].exchange,
+                            dateAdded: DateTime.now(),
+                          );
+                          isTapped
+                              ? watchListRepository.removeFromWatchList(
+                                  stockWatchListModel.stockSymbol!,
+                                )
+                              : watchListRepository
+                                  .addToWatchList(stockWatchListModel);
+                          return !isTapped;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 onTap: () async {
                   final stockDataModel = await dashboardRepository

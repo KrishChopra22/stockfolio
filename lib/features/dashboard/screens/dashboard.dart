@@ -12,10 +12,9 @@ import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
 import 'package:stockfolio/models/user_model.dart';
 import 'package:stockfolio/utils/Colors.dart';
+import 'package:stockfolio/utils/utils.dart';
+import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_search.dart';
-
-import '../../../utils/utils.dart';
-import '../../../widgets/custom_button.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({required this.userModel, super.key});
@@ -191,7 +190,7 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButton: Container(
         color: Colors.transparent,
         height: 50,
-        width: double.maxFinite,
+        width: 50,
         child: FloatingActionButton.small(
           backgroundColor: Colors.white,
           onPressed: () async {
