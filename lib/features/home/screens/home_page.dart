@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +19,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    getUserStocksList();
+    getUserStocksStream();
   }
 
   DashboardRepository dashboardRepository = DashboardRepository();
@@ -29,7 +27,7 @@ class _HomePageState extends State<HomePage>
   List<StockTransactionModel> pastUserHoldings = <StockTransactionModel>[];
   late final Stream<QuerySnapshot<Map<String, dynamic>>> _stockStream;
 
-  Future<void> getUserStocksList() async {
+  Future<void> getUserStocksStream() async {
     _stockStream = dashboardRepository.getStocksStream();
     setState(() {});
   }
@@ -240,14 +238,10 @@ class _HomePageState extends State<HomePage>
                       )
                       .toList();
                   userHoldings = StockTransactionModel.toList(docList);
-                  // userHoldings.forEach((element) {
-                  //   if(!element.isBought!){
-                  //      pastUserHoldings.add(element);
-                  //   }
-                  // });
                   pastUserHoldings = StockTransactionModel.toList(docList);
                   final Map<String, StockTransactionModel> userHoldingsMap = {};
-                  userHoldings.sort((a,b) => a.transactionDate!.compareTo(b.transactionDate!));
+                  userHoldings.sort((a, b) =>
+                      a.transactionDate!.compareTo(b.transactionDate!));
                   for (final StockTransactionModel stockTransactionModel
                       in userHoldings) {
                     if (userHoldingsMap
@@ -282,10 +276,7 @@ class _HomePageState extends State<HomePage>
                   }
 
                   final List<StockTransactionModel> groupedUserHoldings =
-                    userHoldingsMap.values.toList();
-                  // userHoldingsMap.values.forEach((element) {
-                  //   print(element.toJson().toString());
-                  // });
+                      userHoldingsMap.values.toList();
                   final dateFormat = DateFormat('dd MMM, yyyy');
                   final timeFormat = DateFormat('h:mm a');
                   return currentHolding == 0
