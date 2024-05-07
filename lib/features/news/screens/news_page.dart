@@ -31,120 +31,126 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: stocksNewsList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                    child: GestureDetector(
-                      onTap: () async {
-                        await openUrl(stocksNewsList[index].newsUrl!);
-                      },
-                      child: Container(
-                        height: 280,
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightBlue,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox.fromSize(
-                              size: const Size.fromHeight(180),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.network(
-                                  stocksNewsList[index].imageUrl!,
-                                  fit: BoxFit.cover,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.05,
+            vertical: MediaQuery.of(context).size.height * 0.02,
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: stocksNewsList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: GestureDetector(
+                        onTap: () async {
+                          await openUrl(stocksNewsList[index].newsUrl!);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 6,vertical: 6),
+                          height: 280,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            color: AppColors.lightBlue,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox.fromSize(
+                                size: const Size.fromHeight(180),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.network(
+                                    stocksNewsList[index].imageUrl!,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${stocksNewsList[index].title}',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
+                              Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${stocksNewsList[index].title}',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.blue,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4),
-                                          child: Text(
-                                            '${stocksNewsList[index].tickers}',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            color: AppColors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 8),
+                                            child: Text(
+                                              '${stocksNewsList[index].tickers}',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.midBlue,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(6),
-                                          child: Text(
-                                            'Published At : ${stocksNewsList[index].date.toString().substring(0, 10)}',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                        DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            color: AppColors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 8),
+                                            child: Text(
+                                              'Published At : ${stocksNewsList[index].date.toString().substring(0, 10)}',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '~ ${stocksNewsList[index].authorName}',
-                                    style: const TextStyle(
-                                      color: AppColors.blue,
-                                      fontWeight: FontWeight.w700,
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      '~ ${stocksNewsList[index].authorName}',
+                                      style: const TextStyle(
+                                        color: AppColors.black,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -166,7 +166,7 @@ class _SellState extends State<Sell> {
               Padding(
                 padding: const EdgeInsets.all(18),
                 child: CustomButton(
-                  text: 'Add Trade',
+                  text: 'Next',
                   onPressed: () {
                     if (searchController.text.isNotEmpty) {
                       Navigator.of(context).push(

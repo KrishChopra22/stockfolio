@@ -32,142 +32,208 @@ class _WatchListPageState extends State<WatchListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: _watchlistStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Something went wrong'));
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.blue,
-                    ),
-                  );
-                }
-                final docList = snapshot.data!.docs
-                    .map(
-                      (doc) => Map<String, dynamic>.from(
-                        doc.data() as Map<dynamic, dynamic>,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.05,
+            vertical: MediaQuery.of(context).size.height * 0.02,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("My Watchlist",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: _watchlistStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Something went wrong'));
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.blue,
                       ),
-                    )
-                    .toList();
-                userWatchList = StockWatchListModel.toList(docList);
-                userWatchList
-                    .sort((a, b) => b.dateAdded!.compareTo(a.dateAdded!));
-
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: userWatchList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final dateFormat = DateFormat('dd MMM, yyyy');
-                    final timeFormat = DateFormat('h:mm a');
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 5,
-                      ),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: AppColors.lightBlue,
-                          borderRadius: BorderRadius.circular(12),
+                    );
+                  }
+                  final docList = snapshot.data!.docs
+                      .map(
+                        (doc) => Map<String, dynamic>.from(
+                          doc.data() as Map<dynamic, dynamic>,
                         ),
-                        child: ListTile(
-                          title: Text(
-                            userWatchList[index].stockName!,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.blue,
+                      )
+                      .toList();
+                  userWatchList = StockWatchListModel.toList(docList);
+                  userWatchList.sort((a, b) => b.dateAdded!.compareTo(a.dateAdded!));
+
+                  return userWatchList.isEmpty ?
+                  Expanded(
+                    child: Center(
+                        child: Text(
+                          "No Stocks Added to watchlist",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.darkGrey,
+                    ),)),
+                  ) :
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: userWatchList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final item = userWatchList[index];
+                      final dateFormat = DateFormat('dd MMM, yyyy');
+                      final timeFormat = DateFormat('h:mm a');
+                      print(item.stockSymbol);
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                        ),
+                        child: Dismissible(
+                          key: UniqueKey(),
+                          background: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
                             ),
                           ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '(${userWatchList[index].stockSymbol!})',
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) {
+                            setState(() {
+                              watchListRepo.removeFromWatchList(
+                                  userWatchList[index].stockSymbol!);
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('${item.stockName} deleted'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          },
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: AppColors.lightBlue,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListTile(
+
+                              title: Text(
+                                userWatchList[index].stockName!,
                                 style: const TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.midBlue,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.black,
                                 ),
                               ),
-                              Row(
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    userWatchList[index].exchangeName!,
+                                    '(${userWatchList[index].stockSymbol!})',
                                     style: const TextStyle(
                                       fontSize: 12,
+                                      color: AppColors.darkGrey,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.blue,
                                     ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        userWatchList[index].exchangeName!,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.darkGrey,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                          trailing: SizedBox(
-                            width: 120,
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '₹ ${userWatchList[index].price!}',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.blue,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      timeFormat.format(
-                                        userWatchList[index].dateAdded!,
-                                      ),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        color: AppColors.midBlue,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    Text(
-                                      dateFormat.format(
-                                        userWatchList[index].dateAdded!,
-                                      ),
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        color: AppColors.midBlue,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
+                              // trailing: Container(
+                              //   color: Colors.red,
+                              //   child: Row(
+                              //     children: [
+                              //       Column(
+                              //         crossAxisAlignment: CrossAxisAlignment.end,
+                              //         mainAxisAlignment: MainAxisAlignment.center,
+                              //         children: [
+                              //           Text(
+                              //             '₹ ${userWatchList[index].price!.toStringAsFixed(2)}',
+                              //             style: const TextStyle(
+                              //               fontSize: 14,
+                              //               color: AppColors.black,
+                              //               fontWeight: FontWeight.w600,
+                              //             ),
+                              //           ),
+                              //           // const Spacer(),
+                              //           // Text(
+                              //           //   timeFormat.format(
+                              //           //     userWatchList[index].dateAdded!,
+                              //           //   ),
+                              //           //   style: const TextStyle(
+                              //           //     fontSize: 11,
+                              //           //     color: AppColors.midBlue,
+                              //           //     fontWeight: FontWeight.w500,
+                              //           //   ),
+                              //           // ),
+                              //           // Text(
+                              //           //   dateFormat.format(
+                              //           //     userWatchList[index].dateAdded!,
+                              //           //   ),
+                              //           //   style: const TextStyle(
+                              //           //     fontSize: 11,
+                              //           //     color: AppColors.midBlue,
+                              //           //     fontWeight: FontWeight.w500,
+                              //           //   ),
+                              //           // ),
+                              //         ],
+                              //       ),
+                              //       SizedBox(
+                              //         width: 10,
+                              //       ),
+                              //       IconButton(
+                              //         onPressed: () {
+                              //           watchListRepo.removeFromWatchList(
+                              //             userWatchList[index].stockSymbol!,
+                              //           );
+                              //         },
+                              //         icon: const Icon(Icons.delete_rounded),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              trailing: Text(
+                                '₹ ${userWatchList[index].price!.toStringAsFixed(2)}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                const Spacer(),
-                                IconButton(
-                                  onPressed: () {
-                                    watchListRepo.removeFromWatchList(
-                                      userWatchList[index].stockSymbol!,
-                                    );
-                                  },
-                                  icon: const Icon(Icons.delete_rounded),
-                                ),
-                              ],
+                              ),
+                              onTap: () {},
                             ),
                           ),
-                          onTap: () {},
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
