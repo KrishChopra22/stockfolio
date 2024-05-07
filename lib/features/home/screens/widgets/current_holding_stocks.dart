@@ -49,7 +49,7 @@ class CurrentHoldingStocks extends StatelessWidget {
                     groupedUserHoldings[index].exchangeName!,
                     style: const TextStyle(
                       fontSize: 12,
-                      color: AppColors.brown,
+                      color: AppColors.darkGrey,
                     ),
                   ),
                   Row(
@@ -58,8 +58,8 @@ class CurrentHoldingStocks extends StatelessWidget {
                         'Qty : ',
                         style: TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.blue,
+                          fontWeight: FontWeight.w300,
+                          color: AppColors.black,
                         ),
                       ),
                       Text(
@@ -67,7 +67,7 @@ class CurrentHoldingStocks extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.blue,
+                          color: AppColors.black,
                         ),
                       ),
                     ],
@@ -75,11 +75,11 @@ class CurrentHoldingStocks extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        'Prev Price : ',
+                        'Avg Price : ',
                         style: TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.blue,
+                          fontWeight: FontWeight.w300,
+                          color: AppColors.black,
                         ),
                       ),
                       Text(
@@ -87,7 +87,7 @@ class CurrentHoldingStocks extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.yellow,
+                          color: AppColors.black,
                         ),
                       ),
                     ],
@@ -101,7 +101,7 @@ class CurrentHoldingStocks extends StatelessWidget {
                     '₹ ${tradeAmount.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 12,
-                      color: AppColors.blue,
+                      color: AppColors.black,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -112,7 +112,7 @@ class CurrentHoldingStocks extends StatelessWidget {
                     ),
                     style: const TextStyle(
                       fontSize: 11,
-                      color: AppColors.midBlue,
+                      color: AppColors.darkGrey,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -122,7 +122,7 @@ class CurrentHoldingStocks extends StatelessWidget {
                     ),
                     style: const TextStyle(
                       fontSize: 11,
-                      color: AppColors.midBlue,
+                      color: AppColors.darkGrey,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

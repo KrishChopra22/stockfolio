@@ -53,7 +53,10 @@ class _BuyState extends State<Buy> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.05,
+                    vertical: MediaQuery.of(context).size.height * 0.02,
+                  ),
                   child: TextFormField(
                     style: const TextStyle(
                       fontSize: 16,
