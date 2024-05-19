@@ -32,13 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Card(
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
             color: AppColors.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 300),
+                  Image.asset('assets/stockfolio.png'),
+                  const SizedBox(height: 30),
                   const Text(
                     'Welcome',
                     style: TextStyle(

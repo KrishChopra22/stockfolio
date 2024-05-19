@@ -32,11 +32,14 @@ class _OtpScreenState extends State<OtpScreen> {
           : Center(
               child: SingleChildScrollView(
                 child: Card(
-                  margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                   color: AppColors.white,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 80),
+                      horizontal: 30,
+                      vertical: 40,
+                    ),
                     child: Column(
                       children: <Widget>[
                         // Align(
@@ -46,7 +49,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         //     child: const Icon(Icons.arrow_back),
                         //   ),
                         // ),
-                        const SizedBox(height: 260),
+                        Image.asset('assets/stockfolio.png'),
+                        const SizedBox(height: 20),
                         const Text(
                           'Verification',
                           style: TextStyle(
