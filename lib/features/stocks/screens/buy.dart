@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stockfolio/features/dashboard/repo/dashboard_repo.dart';
 import 'package:stockfolio/models/stock_search_model.dart';
 import 'package:stockfolio/models/stock_transaction_model.dart';
+import 'package:stockfolio/utils/Colors.dart';
 import 'package:stockfolio/utils/utils.dart';
-import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_textfield.dart';
-
-import '../../../utils/Colors.dart';
 
 class Buy extends StatefulWidget {
   const Buy({super.key, required this.allStocksList});
@@ -20,6 +18,7 @@ class Buy extends StatefulWidget {
 class _BuyState extends State<Buy> {
   double amount = 0;
   String searchText = '';
+  DashboardRepository dashboardRepository = DashboardRepository();
   void calculateAmount(String quantity, String stockPrice) {
     if (quantity.isEmpty) {
       quantity = '0';
@@ -37,10 +36,13 @@ class _BuyState extends State<Buy> {
 
   final TextEditingController buyTextController = TextEditingController();
   String selectedStockSymbol = '';
+  String selectedStockIndustry = '';
   final TextEditingController quantityTextController = TextEditingController();
   final TextEditingController priceTextController = TextEditingController();
   final TextEditingController dateTextController = TextEditingController();
   final TextEditingController exchangeTextController = TextEditingController();
+  final TextEditingController sectorTextController = TextEditingController();
+  bool isEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -172,11 +174,12 @@ class _BuyState extends State<Buy> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          onTap: () {
+                          onTap: () async {
                             if (!context.mounted) {
                               return;
                             }
                             setState(() {
+                              isEnabled = false;
                               buyTextController.text =
                                   filteredStocksList[index].name!;
                               selectedStockSymbol =
@@ -195,6 +198,15 @@ class _BuyState extends State<Buy> {
                               quantityTextController.text,
                               priceTextController.text,
                             );
+                            final sectorMap =
+                                await dashboardRepository.fetchStockSector(
+                              selectedStockSymbol,
+                            );
+                            setState(() {
+                              sectorTextController.text = sectorMap['sector']!;
+                              selectedStockIndustry = sectorMap['industry']!;
+                              isEnabled = true;
+                            });
                           },
                         ),
                       ),
@@ -279,6 +291,23 @@ class _BuyState extends State<Buy> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: CustomTextField(
                       hintText: '',
+                      icon: Icons.pie_chart_rounded,
+                      inputType: TextInputType.datetime,
+                      maxLines: 1,
+                      isEnabled: false,
+                      controller: sectorTextController,
+                      labelText: 'Sector',
+                    ),
+                  ),
+                ),
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width / 3,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextField(
+                      hintText: '',
                       icon: Icons.date_range,
                       inputType: TextInputType.datetime,
                       maxLines: 1,
@@ -301,47 +330,71 @@ class _BuyState extends State<Buy> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(18),
-                  child: CustomButton(
-                    text: 'Buy',
-                    onPressed: () async {
-                      if (quantityTextController.text.isEmpty ||
-                          buyTextController.text.isEmpty ||
-                          priceTextController.text.isEmpty) {
-                        showSnackBar(
-                          context,
-                          'Enter Stock Name, Quantity and Price to proceed',
-                        );
-                        return;
-                      }
-                      final DashboardRepository dashboardRepository =
-                          DashboardRepository();
-                      final StockTransactionModel stockTransactionModel =
-                          StockTransactionModel(
-                        stockSymbol: selectedStockSymbol,
-                        userId: '',
-                        price: double.parse(priceTextController.text),
-                        quantity: int.parse(quantityTextController.text),
-                        exchangeName: exchangeTextController.text,
-                        isBought: true,
-                        transactionDate: DateTime.now(),
-                      );
-                      final response = await dashboardRepository
-                          .saveStockTransactionToFirebase(
-                        stockTransaction: stockTransactionModel,
-                      );
-                      if (response.userId!.isNotEmpty) {
-                        showSnackBar(
-                          context,
-                          'Your trade was processed successfully!',
-                        );
-                        Navigator.of(context).pop();
-                      } else {
-                        showSnackBar(
-                          context,
-                          "Your trade wasn't processed, please retry!",
-                        );
-                      }
-                    },
+                  child: ElevatedButton(
+                    onPressed: isEnabled
+                        ? () async {
+                            if (quantityTextController.text.isEmpty ||
+                                buyTextController.text.isEmpty ||
+                                priceTextController.text.isEmpty) {
+                              showSnackBar(
+                                context,
+                                'Enter Stock Name, Quantity and Price to proceed',
+                              );
+                              return;
+                            }
+                            final DashboardRepository dashboardRepository =
+                                DashboardRepository();
+                            final StockTransactionModel stockTransactionModel =
+                                StockTransactionModel(
+                              stockSymbol: selectedStockSymbol,
+                              userId: '',
+                              price: double.parse(priceTextController.text),
+                              quantity: int.parse(quantityTextController.text),
+                              exchangeName: exchangeTextController.text,
+                              sector: sectorTextController.text,
+                              industry: selectedStockIndustry,
+                              isBought: true,
+                              transactionDate: DateTime.now(),
+                            );
+                            final response = await dashboardRepository
+                                .saveStockTransactionToFirebase(
+                              stockTransaction: stockTransactionModel,
+                            );
+                            if (response.userId!.isNotEmpty) {
+                              showSnackBar(
+                                context,
+                                'Your trade was processed successfully!',
+                              );
+                              Navigator.of(context).pop();
+                            } else {
+                              showSnackBar(
+                                context,
+                                "Your trade wasn't processed, please retry!",
+                              );
+                            }
+                          }
+                        : null,
+                    style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: isEnabled
+                          ? MaterialStateProperty.all<Color>(Colors.black87)
+                          : MaterialStateProperty.all<Color>(
+                              Colors.grey.shade400,
+                            ),
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 20,
+                        ),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                    ),
+                    child: const Text('Buy', style: TextStyle(fontSize: 16)),
                   ),
                 ),
               ],

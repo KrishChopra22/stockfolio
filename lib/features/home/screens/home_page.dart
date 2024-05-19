@@ -63,8 +63,9 @@ class _HomePageState extends State<HomePage>
                   userHoldings = StockTransactionModel.toList(docList);
                   pastUserHoldings = StockTransactionModel.toList(docList);
                   final Map<String, StockTransactionModel> userHoldingsMap = {};
-                  userHoldings.sort((a, b) =>
-                      a.transactionDate!.compareTo(b.transactionDate!),);
+                  userHoldings.sort(
+                    (a, b) => a.transactionDate!.compareTo(b.transactionDate!),
+                  );
                   // for (final StockTransactionModel stockTransactionModel in userHoldings) {
                   //   if (userHoldingsMap.containsKey(stockTransactionModel.stockSymbol)) {
                   //     final val = userHoldingsMap[stockTransactionModel.stockSymbol];
@@ -92,7 +93,8 @@ class _HomePageState extends State<HomePage>
                   //   //Amount / QTY
                   // }
 
-                  for (final StockTransactionModel transaction in userHoldings) {
+                  for (final StockTransactionModel transaction
+                      in userHoldings) {
                     final stockSymbol = transaction.stockSymbol;
                     final isBuy = transaction.isBought ?? false;
                     final transactionQuantity = transaction.quantity ?? 0;
@@ -100,31 +102,27 @@ class _HomePageState extends State<HomePage>
                     if (userHoldingsMap.containsKey(stockSymbol)) {
                       var currentHolding = userHoldingsMap[stockSymbol];
                       if (currentHolding != null) {
-
-
                         // Pehale k sab transaction ka price calc hua
-                        final totalPrice = (currentHolding.price ?? 0) * (currentHolding.quantity ?? 0);
+                        final totalPrice = (currentHolding.price ?? 0) *
+                            (currentHolding.quantity ?? 0);
                         // Abhi vale ka price calc hua
-                        final transactionAmount = transaction.price! * transactionQuantity;
-
-                        // print('${stockSymbol}        ');
-                        // print('${totalPrice}         ${currentHolding.price}  * ${currentHolding.quantity}');
-                        // print('$transactionAmount     ${transaction.price} * ${transactionQuantity}');
-
+                        final transactionAmount =
+                            transaction.price! * transactionQuantity;
 
                         //Dono ko add kar do agar buy hai nai toh minus
-                        final newTotalPrice ;
-
-
+                        final double newTotalPrice;
 
                         if (isBuy) {
                           newTotalPrice = totalPrice + transactionAmount;
-                          currentHolding.quantity = (currentHolding.quantity ?? 0) + transactionQuantity;
+                          currentHolding.quantity =
+                              (currentHolding.quantity ?? 0) +
+                                  transactionQuantity;
                         } else {
                           newTotalPrice = totalPrice - transactionAmount;
                           final currentQuantity = currentHolding.quantity ?? 0;
                           if (currentQuantity >= transactionQuantity) {
-                            currentHolding.quantity = currentQuantity - transactionQuantity;
+                            currentHolding.quantity =
+                                currentQuantity - transactionQuantity;
                           } else {
                             print("Sold More than Owned");
                           }
@@ -132,7 +130,9 @@ class _HomePageState extends State<HomePage>
 
                         // Update the price as the average price
                         if (currentHolding.quantity != 0) {
-                          currentHolding.price = newTotalPrice / (currentHolding.quantity ?? 1); // Prevent division by zero
+                          currentHolding.price = newTotalPrice /
+                              (currentHolding.quantity ??
+                                  1); // Prevent division by zero
                         } else {
                           // Set price to 0 if quantity is 0
                           currentHolding.price = 0;
@@ -142,17 +142,17 @@ class _HomePageState extends State<HomePage>
                         }
                       }
                     } else {
-                          userHoldingsMap.putIfAbsent( stockSymbol!,
-                            () => transaction,
-                          );
+                      userHoldingsMap.putIfAbsent(
+                        stockSymbol!,
+                        () => transaction,
+                      );
                     }
                   }
 
-
-
-                  final List<StockTransactionModel> groupedUserHoldings = userHoldingsMap.values.toList();
+                  final List<StockTransactionModel> groupedUserHoldings =
+                      userHoldingsMap.values.toList();
                   //Calc total Invested
-                  double totalInvestedAmount = 0.0;
+                  double totalInvestedAmount = 0;
                   for (var transaction in groupedUserHoldings) {
                     var amt = transaction.price! * transaction.quantity!;
                     totalInvestedAmount += amt;
@@ -161,25 +161,27 @@ class _HomePageState extends State<HomePage>
                   final currentAmount = 10000; // TODO Calc from API Data
 
                   final PL = currentAmount - totalInvestedAmount;
-                  final PLpercent = (PL / totalInvestedAmount * 100).toStringAsFixed(2);
+                  final PLpercent =
+                      (PL / totalInvestedAmount * 100).toStringAsFixed(2);
                   final dateFormat = DateFormat('dd MMM, yyyy');
                   final timeFormat = DateFormat('h:mm a');
                   return Column(
                     children: [
-
                       const SizedBox(height: 20),
                       Card(
                         color: AppColors.lightBlue,
                         margin: const EdgeInsets.symmetric(horizontal: 20),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: MediaQuery.of(context).size.width * 0.05,
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.05,
                             vertical: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Total Invested ',
@@ -198,16 +200,17 @@ class _HomePageState extends State<HomePage>
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     totalInvestedAmount.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: 18,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     '10000',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w300,
@@ -216,28 +219,28 @@ class _HomePageState extends State<HomePage>
                                   ),
                                 ],
                               ),
-                              Divider(
+                              const Divider(
                                 color: AppColors.black,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'P/L: ',
+                                  const Text(
+                                    'P/L : ',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17,
-
                                     ),
                                   ),
                                   Text(
-                                    PL!<0 ?
-                                    '${PL.toString()}' : '+${PL.toString()}',
+                                    PL < 0
+                                        ? PL.toStringAsFixed(2)
+                                        : '+${PL.toStringAsFixed(2)}',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 18,
-                                      color:
-                                      PL! < 0 ? Colors.red : Colors.green,
+                                      color: PL < 0 ? Colors.red : Colors.green,
                                     ),
                                   ),
                                 ],
@@ -246,15 +249,12 @@ class _HomePageState extends State<HomePage>
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    PL!<0 ?
-                                    '${PLpercent.toString()} %' : '+${PLpercent.toString()} %',
+                                    PL < 0 ? '$PLpercent %' : '+$PLpercent %',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12,
-                                      color:
-                                      PL!<0 ? Colors.red : Colors.green,
+                                      color: PL < 0 ? Colors.red : Colors.green,
                                     ),
-
                                   ),
                                 ],
                               ),
@@ -263,41 +263,45 @@ class _HomePageState extends State<HomePage>
                         ),
                       ),
                       DefaultTabController(
-                    length: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(13),
-                      child: TabBar(
-                        indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50), // Creates border
-                          color: Colors.black,
+                        length: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(13),
+                          child: TabBar(
+                            indicator: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(50), // Creates border
+                              color: Colors.black,
+                            ),
+                            labelColor: Colors.white,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            // controller: _tabController,
+                            tabs: const [
+                              Tab(
+                                child: Text('Current Holdings'),
+                              ),
+                              Tab(
+                                child: Text('Past Holdings'),
+                              ),
+                            ],
+                            onTap: (value) {
+                              currentHolding = value;
+                              setState(() {});
+                            }, // controller: ,
+                          ),
                         ),
-                        labelColor: Colors.white,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        // controller: _tabController,
-                        tabs: const [
-                          Tab(
-                            child: Text('Current Holdings'),
-                          ),
-                          Tab(
-                            child: Text('Past Holdings'),
-                          ),
-                        ],
-                        onTap: (value) {
-                          currentHolding = value;
-                          setState(() {});
-                        }, // controller: ,
                       ),
-                    ),
-                  ),
-                      if (currentHolding == 0) CurrentHoldingStocks(
-                      groupedUserHoldings: groupedUserHoldings,
-                        timeFormat: timeFormat,
-                        dateFormat: dateFormat,
-                      ) else PastHoldingStocks(
-                      groupedUserHoldings: pastUserHoldings,
-                      timeFormat: timeFormat,
-                      dateFormat: dateFormat,
-                      )
+                      if (currentHolding == 0)
+                        CurrentHoldingStocks(
+                          groupedUserHoldings: groupedUserHoldings,
+                          timeFormat: timeFormat,
+                          dateFormat: dateFormat,
+                        )
+                      else
+                        PastHoldingStocks(
+                          groupedUserHoldings: pastUserHoldings,
+                          timeFormat: timeFormat,
+                          dateFormat: dateFormat,
+                        )
                     ],
                   );
                 },

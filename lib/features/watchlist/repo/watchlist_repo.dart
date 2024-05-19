@@ -24,6 +24,7 @@ class WatchListRepository {
     await query.get().then(
           (querySnapshot) => querySnapshot.docs.forEach((doc) {
             doc.reference.delete();
+            print("$stockSymbol removed from watchList");
           }),
         );
   }
@@ -39,6 +40,7 @@ class WatchListRepository {
     await _firebaseFirestore.collection('WatchList').add(
           finalStockTransaction.toJson(),
         );
+    print("${stockWatchListModel.stockSymbol!} added to watchList");
     return finalStockTransaction;
   }
 }
