@@ -134,7 +134,7 @@ class _AnalyzePageState extends State<AnalyzePage> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(bottom: 4),
+                padding: EdgeInsets.only(bottom: 10),
                 child: Text(
                   'Sector Analysis',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -144,12 +144,22 @@ class _AnalyzePageState extends State<AnalyzePage> {
                 PieChart(
                   animationDuration: const Duration(milliseconds: 1500),
                   dataMap: sectorAnalysis,
+                  chartRadius: 200,
                   chartValuesOptions: const ChartValuesOptions(
+                    showChartValuesOutside: true,
                     showChartValuesInPercentage: true,
                   ),
+                  legendOptions: const LegendOptions(
+                    showLegendsInRow: true,
+                    legendPosition: LegendPosition.bottom,
+                  ),
+                  chartLegendSpacing: 18,
                 ),
               const SizedBox(
                 height: 10,
+              ),
+              const Divider(
+                thickness: 2,
               ),
               const Padding(
                 padding: EdgeInsets.all(4),
@@ -164,8 +174,10 @@ class _AnalyzePageState extends State<AnalyzePage> {
                   chartType: ChartType.ring,
                   dataMap: industryAnalysis,
                   chartValuesOptions: const ChartValuesOptions(
+                    showChartValueBackground: false,
                     showChartValuesInPercentage: true,
                   ),
+                  chartLegendSpacing: 24,
                 ),
               const SizedBox(
                 height: 10,
@@ -237,32 +249,36 @@ class _AnalyzePageState extends State<AnalyzePage> {
                             ),
                           ],
                         ),
-                        trailing: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Spacer(),
-                            DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: AppColors.blue,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4,
-                                  horizontal: 8,
+                        trailing: SizedBox(
+                          width: 90,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              const Spacer(),
+                              DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: AppColors.blue,
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                child: Text(
-                                  groupedUserHoldings[index].sector!,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 3,
+                                    horizontal: 6,
+                                  ),
+                                  child: Text(
+                                    groupedUserHoldings[index].sector!,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const Spacer(),
-                          ],
+                              const Spacer(),
+                            ],
+                          ),
                         ),
                         onTap: () {},
                       ),
