@@ -39,6 +39,30 @@ class DashboardRepository {
     }
   }
 
+  Future<Map<String, String>> fetchStockSector(String stockSymbol) async {
+    final Map<String, String> sectorMap = {};
+    final http.Response response =
+        await financialModelRequest('/api/v3/profile/$stockSymbol');
+    if (response.statusCode == 200) {
+      final jsonList = jsonDecode(response.body) as List;
+      if (kDebugMode) {
+        print('$stockSymbol stock full details fetched');
+      }
+      sectorMap
+        ..putIfAbsent('sector', () => jsonList[0]['sector'])
+        ..putIfAbsent('industry', () => jsonList[0]['industry']);
+      return sectorMap;
+    } else {
+      if (kDebugMode) {
+        print(response.body);
+      }
+      sectorMap
+        ..putIfAbsent('sector', () => 'Other Sector')
+        ..putIfAbsent('industry', () => 'Other Industry');
+      return sectorMap;
+    }
+  }
+
   Future<StockDataModel> fetchStockData(
     String stockSymbol,
   ) async {
@@ -119,7 +143,6 @@ class DashboardRepository {
         .collection('StockTransactions')
         .where('userId', isEqualTo: uid)
         .get();
-    print(querySnap.docs.toString());
     final docList = querySnap.docs
         .map(
           (doc) =>

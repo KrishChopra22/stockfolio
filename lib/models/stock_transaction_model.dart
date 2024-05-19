@@ -5,6 +5,8 @@ class StockTransactionModel {
     required this.price,
     required this.quantity,
     required this.exchangeName,
+    required this.sector,
+    required this.industry,
     required this.isBought,
     required this.transactionDate,
   });
@@ -13,6 +15,8 @@ class StockTransactionModel {
   double? price;
   int? quantity;
   final String? exchangeName;
+  final String? sector;
+  final String? industry;
   final bool? isBought;
   DateTime? transactionDate;
 
@@ -24,6 +28,8 @@ class StockTransactionModel {
       price: json['price'] ?? 0.0,
       quantity: json['quantity'] ?? 0,
       exchangeName: json['exchangeName'] ?? '',
+      sector: json['sector'] ?? '',
+      industry: json['industry'] ?? '',
       isBought: json['isBought'] ?? true,
       transactionDate: DateTime.parse(json['transactionDate']),
     );
@@ -37,6 +43,8 @@ class StockTransactionModel {
     data['price'] = price;
     data['quantity'] = quantity;
     data['exchangeName'] = exchangeName;
+    data['sector'] = sector;
+    data['industry'] = industry;
     data['isBought'] = isBought;
     data['transactionDate'] = transactionDate.toString();
     return data;
@@ -52,6 +60,8 @@ class StockTransactionModel {
     double? price,
     int? quantity,
     String? exchangeName,
+    String? sector,
+    String? industry,
     bool? isBought,
     DateTime? transactionDate,
   }) {
@@ -61,6 +71,8 @@ class StockTransactionModel {
       price: price ?? this.price,
       quantity: quantity ?? this.quantity,
       exchangeName: exchangeName ?? this.exchangeName,
+      sector: sector ?? this.sector,
+      industry: industry ?? this.industry,
       isBought: isBought ?? this.isBought,
       transactionDate: transactionDate ?? this.transactionDate,
     );

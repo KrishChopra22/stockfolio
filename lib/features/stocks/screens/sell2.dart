@@ -7,15 +7,9 @@ import 'package:stockfolio/widgets/custom_button.dart';
 import 'package:stockfolio/widgets/custom_textfield.dart';
 
 class SellNext extends StatefulWidget {
-  const SellNext(
-      {super.key,
-      required this.selectedStockSymbol,
-      required this.userStocksList,
-      required this.selectedStockExchange});
+  const SellNext({super.key, required this.selectedStockModel});
 
-  final String selectedStockSymbol;
-  final String selectedStockExchange;
-  final List<StockTransactionModel> userStocksList;
+  final StockTransactionModel selectedStockModel;
 
   @override
   State<SellNext> createState() => _SellNextState();
@@ -25,6 +19,7 @@ class _SellNextState extends State<SellNext> {
   final TextEditingController quantityTextController = TextEditingController();
   final TextEditingController priceTextController = TextEditingController();
   final TextEditingController dateTextController = TextEditingController();
+  List<StockTransactionModel> groupedUserHoldings = [];
 
   int totalHoldingQuantity = 0;
   double amount = 0;
@@ -43,15 +38,7 @@ class _SellNextState extends State<SellNext> {
   }
 
   void computeQuantity() {
-    for (final StockTransactionModel stm in widget.userStocksList) {
-      if (stm.stockSymbol == widget.selectedStockSymbol) {
-        if (stm.isBought!) {
-          totalHoldingQuantity += stm.quantity!;
-        } else {
-          totalHoldingQuantity -= stm.quantity!;
-        }
-      }
-    }
+    totalHoldingQuantity = widget.selectedStockModel.quantity!;
     setState(() {});
   }
 
@@ -75,7 +62,7 @@ class _SellNextState extends State<SellNext> {
             children: <Widget>[
               Center(
                 child: Text(
-                  widget.selectedStockSymbol,
+                  widget.selectedStockModel.stockSymbol!,
                   style: const TextStyle(fontSize: 25),
                 ),
               ),
@@ -205,11 +192,13 @@ class _SellNextState extends State<SellNext> {
                             DashboardRepository();
                         final StockTransactionModel stockTransactionModel =
                             StockTransactionModel(
-                          stockSymbol: widget.selectedStockSymbol,
+                          stockSymbol: widget.selectedStockModel.stockSymbol,
                           userId: '',
                           price: double.parse(priceTextController.text),
                           quantity: int.parse(quantityTextController.text),
-                          exchangeName: widget.selectedStockExchange,
+                          exchangeName: widget.selectedStockModel.exchangeName,
+                          sector: widget.selectedStockModel.sector,
+                          industry: widget.selectedStockModel.industry,
                           isBought: false,
                           transactionDate: DateTime.now(),
                         );

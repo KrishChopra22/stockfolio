@@ -85,7 +85,7 @@ class PastHoldingStocks extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '₹ ${groupedUserHoldings[index].price!}',
+                          '₹ ${groupedUserHoldings[index].price!.toStringAsFixed(2)}',
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
